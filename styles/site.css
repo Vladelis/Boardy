@@ -1,0 +1,17 @@
+
+
+.contentMain {
+	background-color: rgba(255, 255, 255, 1);
+	border-radius:10px;
+	margin-top:70px;
+	padding-top:15px;
+}
+body {
+	background-image: url("bg-image.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+.navbar-inverse {
+	border-radius:5px;
+}
