@@ -1,2 +1,0 @@
-# Boardy
-Board game rental
