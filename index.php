@@ -18,7 +18,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="robots" content="noindex">
-		<title>Reperta</title>
+		<title>Boardy</title>
 		<script src="scripts/jquery-1.10.2.min.js"></script>
 		<script src="scripts/bootstrap.min.js"></script>
 		<script src="scripts/sitescripts.js"></script>
@@ -36,7 +36,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				  </button>
-				  <a class="navbar-brand" href="index.php?module=home">Reperta</a>
+				  <a class="navbar-brand" href="index.php?module=home">Boardy</a>
 				</div>
 
 				<div class="collapse navbar-collapse">
