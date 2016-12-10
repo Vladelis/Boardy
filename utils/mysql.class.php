@@ -35,7 +35,7 @@ class mysql {
 	
 	function checkUserLogin($email, $slaptazodis) {
 		$q = 
-		"SELECT `Klientas`.`email`
+		"SELECT `Klientas`.`email`, `Klientas`.`ar_patvirtintas`, `Klientas`.`fk_role_id`
 		FROM  `harhib`.`Klientas`
 		WHERE  `email` = '".$email."' AND `slaptazodis` = '".$slaptazodis."'"
 		;

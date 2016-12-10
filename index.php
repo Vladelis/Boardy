@@ -48,8 +48,19 @@
 					<li><a href='https://bootswatch.com/journal/'>Nuoroda į temą</a></li>
 				  </ul>
 				  <ul class="nav navbar-nav navbar-right">
-						<li><a href='index.php?module=login'>Prisijungti</a></li>
-						<li><a href='index.php?module=kliento_profilio_kurimas'>Registruotis</a></li>
+						<?php
+							if(!empty($_SESSION['user'])) {
+								echo "									
+									<li><a href='index.php'>Atsijungti</a></li>
+								";
+								// Cia reikia atsijungima padaryti
+							} else {
+								echo "
+									<li><a href='index.php?module=login'>Prisijungti</a></li>
+									<li><a href='index.php?module=kliento_profilio_kurimas'>Registruotis</a></li>
+								";
+							}
+						?>
 				  </ul>
 				</div>
 			</div>
