@@ -8,6 +8,7 @@
 	
 	<?php
 		$error = [];
+		$db = new mysql();
 		if(isset($_POST['submitreg'])) {
 			if(isset($_POST['slaptazodis']) && isset($_POST['slaptazodis2']) && 
 				$_POST['slaptazodis2'] != $_POST['slaptazodis']) {
@@ -20,6 +21,12 @@
 				$error['slaptazodioIlgis'] = true;
 			}			
 		}
+		if(isset($_POST['epastas'])) {
+			$yraEmail = $db -> checkForSameEmail($_POST['epastas']);
+			if(isset($yraEmail)) {
+				$error['emailasRegistruotas'] = true;
+			}
+		}
 		if(isset($_POST['submitreg']) && !empty($error)) {
 			echo '
 				<div class="panel panel-primary">
@@ -28,6 +35,9 @@
 					</div>
 					<div class="panel-body">
 						';
+			if(isset($error['emailasRegistruotas'])) {
+				echo '<p>Elektroninis paštas jau yra registruotas</p>';
+			}
 			if(isset($error['taisykles'])) {
 				echo '<p>Privaloma sutikti su taisyklėmis</p>';
 			}
@@ -42,7 +52,6 @@
 				</div>
 			';
 		} else if(isset($_POST['submitreg'])){
-			$db = new mysql();
 			$pastas = $_POST["epastas"];
 			$slaptazodis = $_POST['slaptazodis'];
 			if(isset($_POST["vardas"])) {
