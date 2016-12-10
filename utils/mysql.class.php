@@ -33,6 +33,39 @@ class mysql {
         return self::$connection;
     }
 	
+	function insertNewKlientas($email, $slaptazodis, $vardas, $pavarde, $slapyvardis, $ar_nori_naujienlaiskio, $ip) {
+		$q = 
+		"INSERT INTO  `harhib`.`Klientas` (
+			`id` ,
+			`sukurimo_data` ,
+			`email` ,
+			`slaptazodis` ,
+			`slapyvardis` ,
+			`vardas` ,
+			`pavarde` ,
+			`ar_nori_naujienlaiskio` ,
+			`ar_patvirtintas` ,
+			`paskutinis_prisijungimas` ,
+			`paskutinis_ip` ,
+			`apsilankymu_kiekis` ,
+			`fk_role_id`
+		)
+			VALUES (
+			NULL ,  
+			'".$slaptazodis."', 
+			'".$slapyvardis."' , 
+			'".$vardas."' , 
+			'".$pavarde."' ,  
+			'".$ar_nori_naujienlaiskio."',  
+			'0',  
+			'".$ip."',  
+			'0',  
+			'1'
+		);"
+		;
+		$result = self::query($q);
+	}
+	
     /**
      * Query the database
      *

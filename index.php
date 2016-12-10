@@ -47,6 +47,7 @@
 				  </ul>
 				  <ul class="nav navbar-nav navbar-right">
 						<li><a href='index.php?module=login'>Prisijungti</a></li>
+						<li><a href='index.php?module=kliento_profilio_kurimas'>Registruotis</a></li>
 				  </ul>
 				</div>
 			</div>
