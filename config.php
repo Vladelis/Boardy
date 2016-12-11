@@ -2,9 +2,9 @@
 
 class config {
 	const DB_SERVER    = 'db.if.ktu.lt';
-	const DB_NAME      = 'vlakof';
-	const DB_USERNAME  = 'vlakof';
-	const DB_PASSWORD  = 'EilaeM1oogah0aiY';
+	const DB_NAME      = 'harhib';
+	const DB_USERNAME  = 'harhib';
+	const DB_PASSWORD  = 'ohng2aeyee0Eeghe';
 }
 
 ?>

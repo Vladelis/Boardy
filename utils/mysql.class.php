@@ -33,6 +33,66 @@ class mysql {
         return self::$connection;
     }
 	
+	function checkUserLogin($email, $slaptazodis) {
+		$q = 
+		"SELECT `Klientas`.`email`, `Klientas`.`ar_patvirtintas`, `Klientas`.`fk_role_id`
+		FROM  `harhib`.`Klientas`
+		WHERE  `email` = '".$email."' AND `slaptazodis` = '".$slaptazodis."'"
+		;
+		$result = self::select($q);
+		return $result;
+	}	
+	
+	function checkForSameEmail($email) {
+		$q = 
+		"SELECT `Klientas`.`email`
+		FROM  `harhib`.`Klientas`
+		WHERE  `email` = '".$email."'";
+		$result = self::select($q);
+		return $result;
+	}
+	
+	function insertNewKlientas($email, $slaptazodis, $vardas, $pavarde, $slapyvardis, $ar_nori_naujienlaiskio, $ip) {
+		$q = 
+		"INSERT INTO  `harhib`.`Klientas` (
+			`id` ,
+			`sukurimo_data` ,
+			`email` ,
+			`slaptazodis` ,
+			`slapyvardis` ,
+			`vardas` ,
+			`pavarde` ,
+			`ar_nori_naujienlaiskio` ,
+			`ar_patvirtintas` ,
+			`paskutinis_prisijungimas` ,
+			`paskutinis_ip` ,
+			`apsilankymu_kiekis` ,
+			`fk_role_id`
+		)
+			VALUES (
+			NULL ,  
+			CURTIME(),  
+			'".$email."',  
+			'".$slaptazodis."', 
+			'".$slapyvardis."' , 
+			'".$vardas."' , 
+			'".$pavarde."' ,  
+			'".$ar_nori_naujienlaiskio."',  
+			'0',  
+			CURTIME(),  
+			'".$ip."',  
+			'0',  
+			'1'
+		);"
+		;
+		$result = self::query($q);
+		if (!$result) {
+			//echo 'false';
+			return NULL;
+		}
+		return $result;
+	}
+	
     /**
      * Query the database
      *

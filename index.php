@@ -43,10 +43,24 @@
 				  <ul class="nav navbar-nav">
 					<li><a href='index.php?module=item1'>Item1</a></li>
 					<li><a href='index.php?module=item2'>Item2</a></li>
+                                        <li><a href='index.php?module=stalo_zaidimu_perziura'>Stalo žaidimai</a></li>
+                                        <li><a href='index.php?module=stalo_zaidimu_registracija'>Naujas stalo žaidimas</a></li>
 					<li><a href='https://bootswatch.com/journal/'>Nuoroda į temą</a></li>
 				  </ul>
 				  <ul class="nav navbar-nav navbar-right">
-						<li><a href='index.php?module=login'>Prisijungti</a></li>
+						<?php
+							if(!empty($_SESSION['user'])) {
+								echo "									
+									<li><a href='index.php'>Atsijungti</a></li>
+								";
+								// Cia reikia atsijungima padaryti
+							} else {
+								echo "
+									<li><a href='index.php?module=login'>Prisijungti</a></li>
+									<li><a href='index.php?module=kliento_profilio_kurimas'>Registruotis</a></li>
+								";
+							}
+						?>
 				  </ul>
 				</div>
 			</div>
