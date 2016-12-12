@@ -29,6 +29,8 @@
 							<p>Vartotojas nepatvirtintas, prašome pasitikrinti elektroninį paštą ir patvirtinti vartotoją</p>
 							</div>";
 						} else {
+							$db -> updateUserLogin($_SERVER['REMOTE_ADDR'], $result[0]['email']);
+							//die();
 							$_SESSION['user'] = $result[0];
 							header("Location: index.php");
 							die();
@@ -38,6 +40,7 @@
 						// Jei ne vartotojas, gal tai darbuotojas?
 						$result = $db -> checkDarbuotojasLogin($email, md5($password));
 						if(isset($result)) {
+							$db -> updateDarbuotojasLogin($_SERVER['REMOTE_ADDR'], $result[0]['email']);
 							$_SESSION['user'] = $result[0];
 							header("Location: index.php");
 							die();

@@ -33,6 +33,31 @@ class mysql {
         return self::$connection;
     }
 	
+	function updateUserLogin($ip, $email) {
+		$q = 
+		"UPDATE  `harhib`.`Klientas` 
+		SET  
+			`paskutinis_prisijungimas` =  CURTIME(),
+			`paskutinis_ip` =  '".$ip."',
+			apsilankymu_kiekis =  apsilankymu_kiekis + 1
+		WHERE  `Klientas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function updateDarbuotojasLogin($ip, $email) {
+		$q = 
+		"UPDATE  `harhib`.`Darbuotojas` 
+		SET  
+			`paskutinis_prisijungimas` =  CURTIME(),
+			`paskutinis_ip` =  '".$ip."'
+		WHERE  `Darbuotojas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
 	function checkUserLogin($email, $slaptazodis) {
 		$q = 
 		"SELECT `Klientas`.`email`, `Klientas`.`ar_patvirtintas`, `Klientas`.`fk_role_id`
