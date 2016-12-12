@@ -2,7 +2,7 @@
 		// Jei bando pasiekti ne vadybininkas ismesti
 		if(!empty($_SESSION['user'])) {
 			if($_SESSION['user']['fk_role_id']!=3) {
-				header("Location: index.php");
+				header("Location: index.php?module=error");
 				die();
 			}
 		}
