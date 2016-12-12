@@ -58,6 +58,26 @@ class mysql {
 		return $result;
 	}
 	
+	function getFullKlientasData($email) {
+		$q = 
+		"SELECT `Klientas`.`email`, `Klientas`.`slapyvardis`, `Klientas`.`vardas`, `Klientas`.`pavarde`, `Klientas`.`ar_nori_naujienlaiskio`
+		FROM  `harhib`.`Klientas`
+		WHERE  `email` = '".$email."'"
+		;
+		$result = self::select($q);
+		return $result;
+	}
+	
+	function getFullDarbuotojasData($kodas) {
+		$q = 
+		"SELECT `Darbuotojas`.`email`, `Darbuotojas`.`vardas`, `Darbuotojas`.`pavarde`, `Darbuotojas`.`kodas`
+		FROM  `harhib`.`Darbuotojas`
+		WHERE  `kodas` = '".$kodas."'"
+		;
+		$result = self::select($q);
+		return $result;
+	}
+	
 	function checkUserLogin($email, $slaptazodis) {
 		$q = 
 		"SELECT `Klientas`.`email`, `Klientas`.`ar_patvirtintas`, `Klientas`.`fk_role_id`

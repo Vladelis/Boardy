@@ -82,11 +82,14 @@
 						<?php
 							if(!empty($_SESSION['user'])) {
 								// Sito font neatinka kitu, bet as nzn kaip kitaip padaryti atsijungima
-								echo '									
-									<form class="form" method="post" action="">
-										<input class="hidden" name="atsijungimas" value="atsijungimas">
-										<input type="submit" name="submitAtsijungimas" value="Atsijungti" class="btn btn-primary btn-lg" />
-									</form>
+								echo '	
+									<li><a href="index.php?module=profiliu_perziura">Peržiurėti profilį</a></li>
+									<li>
+										<form class="form" method="post" action="">
+											<input class="hidden" name="atsijungimas" value="atsijungimas">
+											<input type="submit" name="submitAtsijungimas" value="Atsijungti" class="btn btn-primary btn-lg" />
+										</form>
+									</li>
 								';
 								
 							} else {
