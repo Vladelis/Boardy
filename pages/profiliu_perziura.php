@@ -128,7 +128,7 @@
 						<div class="col-lg-8">
 							<input type="email" class="hidden" name="epastas" value="'.$data[0]['email'].'">
 							<input type="text" class="hidden" name="naujienlaiskisKlientas" value="'.$data[0]['ar_nori_naujienlaiskio'].'">
-							<label class="control-label">'; if($data[0]['ar_nori_naujienlaiskio']==1) echo "Užsakyti"; else "Atsisakyta"; echo '</label>
+							<label class="control-label">'; if($data[0]['ar_nori_naujienlaiskio']==1) {echo "Užsakyti"; } else { echo "Atsisakyta"; } echo '</label>
 						</div>
 					</div>
 					<div class="form-group col-md-4">
@@ -151,6 +151,18 @@
 					</div>
 				</form>
 		';
+		if($_SESSION['user']['fk_role_id']==3) {
+			echo '
+				<form class="form-horizontal col-md-12" method="post" action="index.php?module=profiliu_redagavimas">
+					<div class="form-group col-md-8">
+						<input type="email" class="hidden" name="epastas" value="'.$data[0]['email'].'">
+					</div>
+					<div class="form-group col-md-4">
+						<input type="submit" name="submitKlientasTrinti" value="Trinti kliento profilį" class="btn btn-primary" />
+					</div>
+				</form>
+		';
+		}
 		echo '
 			</div>
 		';
@@ -204,7 +216,7 @@
 						<label class="col-lg-4 control-label">Elektroninis paštas :</label>
 						<div class="col-lg-8">
 							<input type="text" class="hidden" name="kodas" value="'.$data[0]['kodas'].'">
-							<input type="text" class="hidden" name="epastas" value="redaguoti">
+							<input type="text" class="hidden" name="epastasDarbuotojas" value="redaguoti">
 							<label class="control-label">'.$data[0]['email'].'</label>
 						</div>
 					</div>
@@ -218,6 +230,7 @@
 					<div class="form-group col-md-8">
 						<label class="col-lg-4 control-label">Slaptažodis :</label>
 						<div class="col-lg-8">
+							<input type="text" class="hidden" name="epastas" value="'.$data[0]['email'].'">
 							<input type="text" class="hidden" name="kodas" value="'.$data[0]['kodas'].'">
 							<input type="text" class="hidden" name="slaptazodisDarbuotojas" value="redaguoti">
 							<label class="control-label">******</label>
@@ -228,6 +241,18 @@
 					</div>
 				</form>
 		';
+		if($_SESSION['user']['fk_role_id']==3) {
+			echo '
+				<form class="form-horizontal col-md-12" method="post" action="index.php?module=profiliu_redagavimas">
+					<div class="form-group col-md-8">
+						<input type="text" class="hidden" name="kodas" value="'.$data[0]['kodas'].'">
+					</div>
+					<div class="form-group col-md-4">
+						<input type="submit" name="submitDarbuotojasTrinti" value="Trinti darbuotojo profilį" class="btn btn-primary" />
+					</div>
+				</form>
+		';
+		}
 		echo '
 			</div>
 		';

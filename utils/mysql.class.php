@@ -33,6 +33,22 @@ class mysql {
         return self::$connection;
     }
 	
+	function deleteKlientas($email) {
+		$q = "
+		DELETE FROM `harhib`.`Klientas` WHERE  `Klientas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function deleteDarbuotojas($kodas) {
+		$q = "
+		DELETE FROM `harhib`.`Darbuotojas` WHERE  `Darbuotojas`.`kodas` = '".$kodas."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
 	function updateUserLogin($ip, $email) {
 		$q = 
 		"UPDATE  `harhib`.`Klientas` 
@@ -75,6 +91,62 @@ class mysql {
 		WHERE  `kodas` = '".$kodas."'"
 		;
 		$result = self::select($q);
+		return $result;
+	}
+	
+	function redaguotiKlientoVarda($email, $vardas) {
+		$q = "
+		UPDATE `harhib`.`Klientas` SET  `vardas` =  '".$vardas."' WHERE  `Klientas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function redaguotiKlientoPavarde($email, $pavarde) {
+		$q = "
+		UPDATE `harhib`.`Klientas` SET  `pavarde` =  '".$pavarde."' WHERE  `Klientas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function redaguotiKlientoSlapyvardi($email, $slapyvardis) {
+		$q = "
+		UPDATE `harhib`.`Klientas` SET  `slapyvardis` =  '".$slapyvardis."' WHERE  `Klientas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function redaguotiKlientoNaujienlaiskius($email, $ar_nori_naujienlaiskio) {
+		$q = "
+		UPDATE `harhib`.`Klientas` SET  `ar_nori_naujienlaiskio` =  '".$ar_nori_naujienlaiskio."' WHERE  `Klientas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function redaguotiKlientoSlaptazodi($email, $slaptazodis) {
+		$q = "
+		UPDATE `harhib`.`Klientas` SET  `slaptazodis` =  '".$slaptazodis."' WHERE  `Klientas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function redaguotiDarbuotojoSlaptazodi($kodas, $slaptazodis) {
+		$q = "
+		UPDATE `harhib`.`Darbuotojas` SET  `slaptazodis` =  '".$slaptazodis."' WHERE  `Darbuotojas`.`kodas` = '".$kodas."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function redaguotiDarbuotojoEmail($kodas, $email) {
+		$q = "
+		UPDATE `harhib`.`Darbuotojas` SET  `email` =  '".$email."' WHERE  `Darbuotojas`.`kodas` = '".$kodas."';
+		";
+		$result = self::query($q);
 		return $result;
 	}
 	
