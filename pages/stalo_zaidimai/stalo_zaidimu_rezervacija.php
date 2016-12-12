@@ -61,12 +61,41 @@ $row = mysqli_fetch_array($result);
         <div class="form-group">
             <p style="font-style: italic; text-align:justify;"> <?php echo $row["aprasymas"];?></p>
         </div>
-        <br>
-        <a href="#" class="btn btn-success">Rezervuoti</a>
-        <!--
-        <br>
-        <input style="float: right;" class="btn btn-primary" type="submit" name="submit" value="Pateikti">  
-        -->
+        
+        <div class="container">
+        <!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Rezervuoti</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Žaidimo rezervavimas</h4>
+              </div>
+                
+              <div class="modal-body">
+                <form>
+                    Kada norite atsiimti žaidimą?<br>
+                    <input type="date" name="from" min="<?php date("m-d-Y");  ?>"><br><br>
+                    Kada norite grąžinti žaidimą?<br>
+                    <input type="date" name="to" min="<?php date("m-d-Y");  ?>"><br><br>
+                    <p style="text-align:justify;"> *Nuomos kaina - 1eu už dieną</p>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success">Patvirtinti</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+  
+</div>
+        
     </div>
         <div class="col-md-6">
             <?php  echo '<img class="img-responsive" src="data:image/jpeg;base64,'.base64_encode( $row['nuotrauka'] ).'"  alt="">';?>
