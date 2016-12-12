@@ -1,14 +1,9 @@
 	<?php
-	/*
-		$db = new mysql();
-		$result = $db -> checkUserLogin("klientas2@klientai.lt", md5('123456'));
-		if(isset($result)) {
-			echo "HI MOM";
-			echo var_dump($result);
-		} else {
-			echo "OOPS";
+		// Jei vartotojas prisijunges ismesti
+		if(!empty($_SESSION['user'])) {
+			header("Location: index.php");
+			die();
 		}
-		*/
 	?>
 	
 	<div class="col-md-12">
@@ -29,14 +24,28 @@
 					$db = new mysql();
 					$result = $db -> checkUserLogin($email, md5($password));
 					if(isset($result)) {
-						$_SESSION['user'] = $result;
-						header("Location: index.php");
-						die();
+						if($result[0]['ar_patvirtintas']==0) {
+							echo "<div class='alert alert-dismissible alert-danger form-group'>
+							<p>Vartotojas nepatvirtintas, prašome pasitikrinti elektroninį paštą ir patvirtinti vartotoją</p>
+							</div>";
+						} else {
+							$_SESSION['user'] = $result[0];
+							header("Location: index.php");
+							die();
+						}
 					}
 					else {
-						echo "<div class='alert alert-dismissible alert-danger form-group'>
+						// Jei ne vartotojas, gal tai darbuotojas?
+						$result = $db -> checkDarbuotojasLogin($email, md5($password));
+						if(isset($result)) {
+							$_SESSION['user'] = $result[0];
+							header("Location: index.php");
+							die();
+						} else {
+							echo "<div class='alert alert-dismissible alert-danger form-group'>
 							<p>Neteisingas elektroninis paštas arba slaptažodis</p>
-						</div>";
+							</div>";
+						}
 					}
 				}
 			?>

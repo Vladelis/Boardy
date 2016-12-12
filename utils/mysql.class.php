@@ -40,8 +40,34 @@ class mysql {
 		WHERE  `email` = '".$email."' AND `slaptazodis` = '".$slaptazodis."'"
 		;
 		$result = self::select($q);
+		if(isset($result)) {
+			if(count($result)==0) {
+				return null;
+			}
+			if($result==false) {
+				return null;
+			}
+		}
 		return $result;
 	}	
+	
+	function checkDarbuotojasLogin($email, $slaptazodis) {
+		$q = 
+		"SELECT `Darbuotojas`.`email`, `Darbuotojas`.`kodas`, `Darbuotojas`.`fk_role_id`
+		FROM  `harhib`.`Darbuotojas`
+		WHERE  `email` = '".$email."' AND `slaptazodis` = '".$slaptazodis."'"
+		;
+		$result = self::select($q);
+		if(isset($result)) {
+			if(count($result)==0) {
+				return null;
+			}
+			if($result==false) {
+				return null;
+			}
+		}
+		return $result;
+	}
 	
 	function checkForSameEmail($email) {
 		$q = 
@@ -52,7 +78,39 @@ class mysql {
 		return $result;
 	}
 	
-	function insertNewKlientas($email, $slaptazodis, $vardas, $pavarde, $slapyvardis, $ar_nori_naujienlaiskio, $ip) {
+	function checkForSameEmailDarbuotojas($email) {
+		$q = 
+		"SELECT `Darbuotojas`.`email`
+		FROM  `harhib`.`Darbuotojas`
+		WHERE  `email` = '".$email."'";
+		$result = self::select($q);
+		return $result;
+	}
+	
+	function checkForSameSlapyvardis($slapyvardis) {
+		$q = 
+		"SELECT `Klientas`.`email`
+		FROM  `harhib`.`Klientas`
+		WHERE  `slapyvardis` = '".$slapyvardis."'";
+		$result = self::select($q);
+		return $result;
+	}
+	
+	// Returns boolean
+	function checkForSameKodas($kodas) {
+		$q = 
+		"SELECT `Darbuotojas`.`email`
+		FROM  `harhib`.`Darbuotojas`
+		WHERE  `kodas` = '".$kodas."'";
+		$result = self::select($q);
+		if(isset($result)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function insertNewKlientas($email, $slaptazodis, $vardas, $pavarde, $slapyvardis, $ar_nori_naujienlaiskio, $ip, $patvirtinimas) {
 		$q = 
 		"INSERT INTO  `harhib`.`Klientas` (
 			`id` ,
@@ -78,11 +136,47 @@ class mysql {
 			'".$vardas."' , 
 			'".$pavarde."' ,  
 			'".$ar_nori_naujienlaiskio."',  
-			'0',  
+			'".$patvirtinimas."',  
 			CURTIME(),  
 			'".$ip."',  
 			'0',  
 			'1'
+		);"
+		;
+		$result = self::query($q);
+		if (!$result) {
+			//echo 'false';
+			return NULL;
+		}
+		return $result;
+	}
+	
+	// tipas : 2 - darbuotojas, 3 - vadybininkas
+	function insertNewDarbuotojas($email, $slaptazodis, $vardas, $pavarde, $kodas, $ip, $tipas) {
+		$q = 
+		"INSERT INTO  `harhib`.`Darbuotojas` (
+			`id`,
+			`sukurimo_data` ,
+			`email` ,
+			`vardas` ,
+			`pavarde` ,
+			`kodas`,
+			`slaptazodis`,
+			`paskutinis_prisijungimas` ,
+			`paskutinis_ip` ,
+			`fk_role_id`
+		)
+			VALUES (
+			NULL ,  
+			CURTIME(),  
+			'".$email."',  
+			'".$vardas."' , 
+			'".$pavarde."',  
+			'".$kodas."', 
+			'".$slaptazodis."', 
+			CURTIME(),  
+			'".$ip."', 
+			'".$tipas."'		
 		);"
 		;
 		$result = self::query($q);

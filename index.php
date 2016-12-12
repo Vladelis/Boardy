@@ -11,6 +11,13 @@
 		$module = mysql::escape($_GET['module']);
 	}
 	
+	// Atsijungiame
+	if(isset($_POST['atsijungimas']) && !empty($_SESSION['user'])) {
+		session_unset();
+		header("Location: index.php");
+		die();
+	}
+	
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -45,15 +52,43 @@
 					<li><a href='index.php?module=item2'>Item2</a></li>
                                         <li><a href='index.php?module=stalo_zaidimu_perziura'>Stalo žaidimai</a></li>
                                         <li><a href='index.php?module=stalo_zaidimu_registracija'>Naujas stalo žaidimas</a></li>
+										<?php
+											if(!empty($_SESSION['user'])) {
+												if($_SESSION['user']['fk_role_id']==2 || $_SESSION['user']['fk_role_id']==3) {
+													echo '
+														<li class="dropdown">
+															<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Profilų kūrimas<span class="caret"></span></a>
+															<ul class="dropdown-menu" role="menu">
+																<li><a href="index.php?module=kliento_profilio_kurimas">Registruoti vartotoją</a></li>
+													';		
+													// Cia ideti patikrinima tik vadybininkui
+													if($_SESSION['user']['fk_role_id']==3) {
+														echo'
+																<li><a href="index.php?module=darbuotojo_profilio_kurimas">Registruoti darbuotoją</a></li>
+																<li><a href="index.php?module=vadybininko_profilio_kurimas">Registruoti vadybininką</a></li>
+														';
+													}
+													echo'
+															</ul>
+														</li>
+														
+													';
+												}
+											}
+								?>
 					<li><a href='https://bootswatch.com/journal/'>Nuoroda į temą</a></li>
 				  </ul>
 				  <ul class="nav navbar-nav navbar-right">
 						<?php
 							if(!empty($_SESSION['user'])) {
-								echo "									
-									<li><a href='index.php'>Atsijungti</a></li>
-								";
-								// Cia reikia atsijungima padaryti
+								// Sito font neatinka kitu, bet as nzn kaip kitaip padaryti atsijungima
+								echo '									
+									<form class="form" method="post" action="">
+										<input class="hidden" name="atsijungimas" value="atsijungimas">
+										<input type="submit" name="submitAtsijungimas" value="Atsijungti" class="btn btn-primary btn-lg" />
+									</form>
+								';
+								
 							} else {
 								echo "
 									<li><a href='index.php?module=login'>Prisijungti</a></li>
