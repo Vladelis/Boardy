@@ -1,54 +1,44 @@
-<table class="table table-striped table-hover ">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Column heading</th>
-      <th>Column heading</th>
-      <th>Column heading</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr class="info">
-      <td>3</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr class="success">
-      <td>4</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr class="danger">
-      <td>5</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr class="warning">
-      <td>6</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr class="active">
-      <td>7</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-  </tbody>
-</table> 
+
+		<div class="col-md-12">
+			<legend style="padding-top:20px">Naujienlaiškiai</legend>
+			<div class="col-sm-4 newsletterItem">
+				<div class="mailIcon unsentMail">
+					
+					<span class=" glyphicon glyphicon-envelope" style="padding-top:20px"></span>
+				</div>
+				<div style="padding-top:10px">
+					<h4>Raktų pakabukas</h4>
+					<p>
+						<i>Prie kiekvienos nuomos gauk nemokama raktų pakabuką...</i>
+					</p>
+				</div>
+			</div>
+			<div class="col-sm-4 newsletterItem">
+				<div class="mailIcon sentMail">
+					
+					<span class=" glyphicon glyphicon-envelope" style="padding-top:20px"></span>
+				</div>
+				<div style="padding-top:10px">
+					<h4>Raktų pakabukas</h4>
+					<p>
+						<i>Prie kiekvienos nuomos gauk nemokama raktų pakabuką...</i>
+					</p>
+				</div>
+			</div>
+			<div class="col-sm-4 newsletterItem">
+				<div class="mailIcon sentMail">
+					
+					<span class=" glyphicon glyphicon-envelope" style="padding-top:20px"></span>
+				</div>
+				<div style="padding-top:10px">
+					<h4>Raktų pakabukas</h4>
+					<p>
+						<i>Prie kiekvienos nuomos gauk nemokama raktų pakabuką...</i>
+					</p>
+				</div>
+			</div>
+			
+		</div>
+
+	
+

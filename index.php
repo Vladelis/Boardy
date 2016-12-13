@@ -31,6 +31,7 @@
 		<script src="scripts/sitescripts.js"></script>
 		<link rel="stylesheet" type="text/css" href="styles/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="styles/site.css">
+		<link rel="stylesheet" type="text/css" href="styles/naujienlaiskiai.css">
 	</head>
 	<body>
 
