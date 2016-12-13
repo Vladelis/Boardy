@@ -33,6 +33,123 @@ class mysql {
         return self::$connection;
     }
 	
+	function deleteKlientas($email) {
+		$q = "
+		DELETE FROM `harhib`.`Klientas` WHERE  `Klientas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function deleteDarbuotojas($kodas) {
+		$q = "
+		DELETE FROM `harhib`.`Darbuotojas` WHERE  `Darbuotojas`.`kodas` = '".$kodas."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function updateUserLogin($ip, $email) {
+		$q = 
+		"UPDATE  `harhib`.`Klientas` 
+		SET  
+			`paskutinis_prisijungimas` =  CURTIME(),
+			`paskutinis_ip` =  '".$ip."',
+			apsilankymu_kiekis =  apsilankymu_kiekis + 1
+		WHERE  `Klientas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function updateDarbuotojasLogin($ip, $email) {
+		$q = 
+		"UPDATE  `harhib`.`Darbuotojas` 
+		SET  
+			`paskutinis_prisijungimas` =  CURTIME(),
+			`paskutinis_ip` =  '".$ip."'
+		WHERE  `Darbuotojas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function getFullKlientasData($email) {
+		$q = 
+		"SELECT `Klientas`.`email`, `Klientas`.`slapyvardis`, `Klientas`.`vardas`, `Klientas`.`pavarde`, `Klientas`.`ar_nori_naujienlaiskio`
+		FROM  `harhib`.`Klientas`
+		WHERE  `email` = '".$email."'"
+		;
+		$result = self::select($q);
+		return $result;
+	}
+	
+	function getFullDarbuotojasData($kodas) {
+		$q = 
+		"SELECT `Darbuotojas`.`email`, `Darbuotojas`.`vardas`, `Darbuotojas`.`pavarde`, `Darbuotojas`.`kodas`
+		FROM  `harhib`.`Darbuotojas`
+		WHERE  `kodas` = '".$kodas."'"
+		;
+		$result = self::select($q);
+		return $result;
+	}
+	
+	function redaguotiKlientoVarda($email, $vardas) {
+		$q = "
+		UPDATE `harhib`.`Klientas` SET  `vardas` =  '".$vardas."' WHERE  `Klientas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function redaguotiKlientoPavarde($email, $pavarde) {
+		$q = "
+		UPDATE `harhib`.`Klientas` SET  `pavarde` =  '".$pavarde."' WHERE  `Klientas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function redaguotiKlientoSlapyvardi($email, $slapyvardis) {
+		$q = "
+		UPDATE `harhib`.`Klientas` SET  `slapyvardis` =  '".$slapyvardis."' WHERE  `Klientas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function redaguotiKlientoNaujienlaiskius($email, $ar_nori_naujienlaiskio) {
+		$q = "
+		UPDATE `harhib`.`Klientas` SET  `ar_nori_naujienlaiskio` =  '".$ar_nori_naujienlaiskio."' WHERE  `Klientas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function redaguotiKlientoSlaptazodi($email, $slaptazodis) {
+		$q = "
+		UPDATE `harhib`.`Klientas` SET  `slaptazodis` =  '".$slaptazodis."' WHERE  `Klientas`.`email` = '".$email."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function redaguotiDarbuotojoSlaptazodi($kodas, $slaptazodis) {
+		$q = "
+		UPDATE `harhib`.`Darbuotojas` SET  `slaptazodis` =  '".$slaptazodis."' WHERE  `Darbuotojas`.`kodas` = '".$kodas."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
+	function redaguotiDarbuotojoEmail($kodas, $email) {
+		$q = "
+		UPDATE `harhib`.`Darbuotojas` SET  `email` =  '".$email."' WHERE  `Darbuotojas`.`kodas` = '".$kodas."';
+		";
+		$result = self::query($q);
+		return $result;
+	}
+	
 	function checkUserLogin($email, $slaptazodis) {
 		$q = 
 		"SELECT `Klientas`.`email`, `Klientas`.`ar_patvirtintas`, `Klientas`.`fk_role_id`
@@ -40,8 +157,34 @@ class mysql {
 		WHERE  `email` = '".$email."' AND `slaptazodis` = '".$slaptazodis."'"
 		;
 		$result = self::select($q);
+		if(isset($result)) {
+			if(count($result)==0) {
+				return null;
+			}
+			if($result==false) {
+				return null;
+			}
+		}
 		return $result;
 	}	
+	
+	function checkDarbuotojasLogin($email, $slaptazodis) {
+		$q = 
+		"SELECT `Darbuotojas`.`email`, `Darbuotojas`.`kodas`, `Darbuotojas`.`fk_role_id`
+		FROM  `harhib`.`Darbuotojas`
+		WHERE  `email` = '".$email."' AND `slaptazodis` = '".$slaptazodis."'"
+		;
+		$result = self::select($q);
+		if(isset($result)) {
+			if(count($result)==0) {
+				return null;
+			}
+			if($result==false) {
+				return null;
+			}
+		}
+		return $result;
+	}
 	
 	function checkForSameEmail($email) {
 		$q = 
@@ -52,7 +195,39 @@ class mysql {
 		return $result;
 	}
 	
-	function insertNewKlientas($email, $slaptazodis, $vardas, $pavarde, $slapyvardis, $ar_nori_naujienlaiskio, $ip) {
+	function checkForSameEmailDarbuotojas($email) {
+		$q = 
+		"SELECT `Darbuotojas`.`email`
+		FROM  `harhib`.`Darbuotojas`
+		WHERE  `email` = '".$email."'";
+		$result = self::select($q);
+		return $result;
+	}
+	
+	function checkForSameSlapyvardis($slapyvardis) {
+		$q = 
+		"SELECT `Klientas`.`email`
+		FROM  `harhib`.`Klientas`
+		WHERE  `slapyvardis` = '".$slapyvardis."'";
+		$result = self::select($q);
+		return $result;
+	}
+	
+	// Returns boolean
+	function checkForSameKodas($kodas) {
+		$q = 
+		"SELECT `Darbuotojas`.`email`
+		FROM  `harhib`.`Darbuotojas`
+		WHERE  `kodas` = '".$kodas."'";
+		$result = self::select($q);
+		if(isset($result)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function insertNewKlientas($email, $slaptazodis, $vardas, $pavarde, $slapyvardis, $ar_nori_naujienlaiskio, $ip, $patvirtinimas) {
 		$q = 
 		"INSERT INTO  `harhib`.`Klientas` (
 			`id` ,
@@ -78,11 +253,47 @@ class mysql {
 			'".$vardas."' , 
 			'".$pavarde."' ,  
 			'".$ar_nori_naujienlaiskio."',  
-			'0',  
+			'".$patvirtinimas."',  
 			CURTIME(),  
 			'".$ip."',  
 			'0',  
 			'1'
+		);"
+		;
+		$result = self::query($q);
+		if (!$result) {
+			//echo 'false';
+			return NULL;
+		}
+		return $result;
+	}
+	
+	// tipas : 2 - darbuotojas, 3 - vadybininkas
+	function insertNewDarbuotojas($email, $slaptazodis, $vardas, $pavarde, $kodas, $ip, $tipas) {
+		$q = 
+		"INSERT INTO  `harhib`.`Darbuotojas` (
+			`id`,
+			`sukurimo_data` ,
+			`email` ,
+			`vardas` ,
+			`pavarde` ,
+			`kodas`,
+			`slaptazodis`,
+			`paskutinis_prisijungimas` ,
+			`paskutinis_ip` ,
+			`fk_role_id`
+		)
+			VALUES (
+			NULL ,  
+			CURTIME(),  
+			'".$email."',  
+			'".$vardas."' , 
+			'".$pavarde."',  
+			'".$kodas."', 
+			'".$slaptazodis."', 
+			CURTIME(),  
+			'".$ip."', 
+			'".$tipas."'		
 		);"
 		;
 		$result = self::query($q);

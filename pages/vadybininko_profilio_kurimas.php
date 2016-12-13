@@ -1,46 +1,53 @@
 	<?php
-		// Jei prisijunges vartotojas ismesti
+		// Jei bando pasiekti ne vadybininkas ismesti
 		if(!empty($_SESSION['user'])) {
-			if($_SESSION['user']['fk_role_id']!=2 && $_SESSION['user']['fk_role_id']!=3) {
-				header("Location: index.php");
+			if($_SESSION['user']['fk_role_id']!=3) {
+				header("Location: index.php?module=error");
 				die();
 			}
 		}
 	?>
 	
 	<?php
-		$error = [];
+		function random_str($length = 30, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
+			$charactersLength = strlen($keyspace);
+			$randomString = '';
+			for ($i = 0; $i < $length; $i++) {
+				$randomString .= $keyspace[rand(0, $charactersLength - 1)];
+			}
+			return $randomString;
+		}
 		$db = new mysql();
+		
+		
+		$error = [];
+		
 		if(isset($_POST['submitreg'])) {
 			if(isset($_POST['slaptazodis']) && isset($_POST['slaptazodis2']) && 
 				$_POST['slaptazodis2'] != $_POST['slaptazodis']) {
 				$error['slaptazodis'] = true;
-			}
-			if(!isset($_POST['taisykles']) || $_POST['taisykles'] != "on" ) {
-				$error['taisykles'] = true;
 			}
 			if((isset($_POST['slaptazodis']) && strlen($_POST['slaptazodis'])<6) || (isset($_POST['slaptazodis2']) && strlen($_POST['slaptazodis2'])<6)) {
 				$error['slaptazodioIlgis'] = true;
 			}			
 		}
 		if(isset($_POST['epastas'])) {
-			$yraEmail = $db -> checkForSameEmail($_POST['epastas']);
+			$yraEmail = $db -> checkForSameEmailDarbuotojas($_POST['epastas']);
 			if(count($yraEmail)!=0) {
 				$error['emailasRegistruotas'] = true;
 			}
 		}
-		if(isset($_POST['slapyvardis'])) {
-			//echo strlen($_POST['slapyvardis']);
-			if (strlen($_POST['slapyvardis'])>0) {
-				$yraSlapyvardis = $db -> checkForSameSlapyvardis($_POST['slapyvardis']);
-			} else {
-				//echo "slapyvardis 0";
-				$yraSlapyvardis = null;
+		// Kodas turi buti unikalus ir tik is skaiciu/raidziu
+		if(isset($_POST['kodas'])) {
+			$yraKodas = $db -> checkForSameKodas($_POST['kodas']);
+			if(!isset($yraKodas)) {
+				$error['kodas'] = true;
 			}
-			if(isset($yraSlapyvardis)) {
-				if(count($yraSlapyvardis)!=0) {
-					$error['slapyvardisYra'] = true;
-				}
+			if(!ctype_alnum($_POST['kodas'])) {
+				$error['kodasSudarymas'] = true;
+			}
+			if(strlen($_POST['kodas'])>30) {
+				$error['kodasSimboliai'] = true;
 			}
 		}
 		if(isset($_POST['submitreg']) && !empty($error)) {
@@ -54,70 +61,40 @@
 			if(isset($error['emailasRegistruotas'])) {
 				echo '<p>Elektroninis paštas jau yra registruotas</p>';
 			}
-			if(isset($error['taisykles'])) {
-				echo '<p>Privaloma sutikti su taisyklėmis</p>';
-			}
 			if(isset($error['slaptazodis'])) {
 				echo '<p>Slaptažodžiai turi sutapti</p>';
 			}
 			if(isset($error['slaptazodioIlgis'])) {
 				echo '<p>Slaptažodis turi būti sudarytas iš bent 6 simbolių</p>';
 			}
-			if(isset($error['slapyvardisYra'])) {
-				echo '<p>Slapyvardis paimtas</p>';
+			if(isset($error['kodas'])) {
+				echo '<p>Kodas turi būti unikalus</p>';
+			}
+			if(isset($error['kodasSudarymas'])) {
+				echo '<p>Kodas turi būti sudarytas tik iš raidžių is skaitmenų</p>';
+			}
+			if(isset($error['kodasSimboliai'])) {
+				echo '<p>Kodas turi būti iki 30 simbolių ilgio</p>';
 			}
 			echo			'
 					</div>
 				</div>
 			';
-		} else if(isset($_POST['submitreg'])) {
+		} else if(isset($_POST['submitreg'])){
 			$pastas = $_POST["epastas"];
 			$slaptazodis = $_POST['slaptazodis'];
-			if(isset($_POST["vardas"])) {
-				$vardas = $_POST["vardas"];
-			} else {
-				$vardas = NULL;
-			}
-			if(isset($_POST["pavarde"])) {
-				$pavarde = $_POST["pavarde"];
-			} else {
-				$pavarde = NULL;
-			}
-			if(isset($_POST["slapyvardis"])) {
-				$slapyvardis = $_POST["slapyvardis"];
-			} else {
-				$slapyvardis = NULL;
-			}
-			if(isset($_POST['naujienlaiskiai'])) {
-				$naujienlaiskiai = 1;
-			} else {
-				$naujienlaiskiai = 0;
-			}
-			//echo $naujienlaiskiai;
-			$patvirtinimas = 0;
-			if(!empty($_SESSION['user'])) {
-				if($_SESSION['user']['fk_role_id']==2 || $_SESSION['user']['fk_role_id']==3) {
-					$patvirtinimas = 1;
-				}
-			}
-			$result = $db -> insertNewKlientas($pastas, md5($slaptazodis), $vardas, $pavarde, $slapyvardis, $naujienlaiskiai, $_SERVER['REMOTE_ADDR'], $patvirtinimas);
+			$vardas = $_POST["vardas"];
+			$pavarde = $_POST["pavarde"];
+			$kodas = $_POST['kodas'];
+			// 3 gale tai vadybininko tipas
+			$result = $db -> insertNewDarbuotojas($pastas, md5($slaptazodis), $vardas, $pavarde, $kodas, $_SERVER['REMOTE_ADDR'], 3);
 			echo '
 				<div class="panel panel-success">
 					<div class="panel-heading">
 						<h3 class="panel-title">Registracija sėkminga</h3>
 					</div>
 					<div class="panel-body">
-						';
-			if(!empty($_SESSION['user'])) {
-				if($_SESSION['user']['fk_role_id']==2 || $_SESSION['user']['fk_role_id']==3) {
-					echo '<p>Registracija sėkminga.</p>';
-				}
-				else {
-					echo '<p>Registracija sėkminga, prašome pasitikrinti elektroninį paštą ir patvirtinti registraciją.</p>';
-				}
-			} 
-						
-			echo '
+						<p>Registracija sėkminga.</p>
 					</div>
 				</div>
 				<div id="footer" class="col-md-12">
@@ -127,6 +104,7 @@
 				';
 			die();	
 		}
+		
 	?>
 	
 	<div class="col-md-12">
@@ -151,7 +129,7 @@
 						if (isset($_POST["vardas"])) {
 							echo '<input type="text" class="form-control" name="vardas" placeholder="Vardas" value='.$_POST["vardas"].'>';
 						} else {
-							echo '<input type="text" class="form-control" name="vardas" placeholder="Vardas">';
+							echo '<input type="text" class="form-control" name="vardas" placeholder="Vardas" required>';
 						}
 					?>
 				</div>
@@ -163,19 +141,30 @@
 						if (isset($_POST["pavarde"])) {
 							echo '<input type="text" class="form-control" name="pavarde" placeholder="Pavarde" value='.$_POST["pavarde"].'>';
 						} else {
-							echo '<input type="text" class="form-control" name="pavarde" placeholder="Pavarde">';
+							echo '<input type="text" class="form-control" name="pavarde" placeholder="Pavarde" required>';
 						}
 					?>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="slapyvardis" class="col-lg-4 control-label">Slapyvardis</label>
+				<label for="slapyvardis" class="col-lg-4 control-label">Darbuotojo kodas(tik raidės ir skaitmenys, iki 30 simbolių)</label>
 				<div class="col-lg-8">
 					<?php
-						if (isset($_POST["slapyvardis"])) {
-							echo '<input type="text" class="form-control" name="slapyvardis" placeholder="Slapyvardis" value='.$_POST["slapyvardis"].'>';
+						// cia reikia generuoti koda
+						if (isset($_POST["kodas"])) {
+							echo '<input type="text" class="form-control" name="kodas" placeholder="Kodas" value='.$_POST["kodas"].'>';
 						} else {
-							echo '<input type="text" class="form-control" name="slapyvardis" placeholder="Slapyvardis">';
+							$randomKodas = random_str();
+							// Del visa ko
+							$failsafe = 0;
+							while (!$db -> checkForSameKodas($randomKodas)){
+								$randomKodas = random_str();
+								$failsafe = $failsafe + 1;
+								if ($failsafe>100000) {
+									die();
+								}
+							}
+							echo '<input type="text" class="form-control" name="kodas" placeholder="Kodas" value='.$randomKodas.' required>';
 						}
 					?>
 				</div>
@@ -192,24 +181,6 @@
 					<input type="password" class="form-control" name="slaptazodis2" placeholder="Slaptažodis" required>
 				</div>
 			</div>	
-			<div class="checkbox">
-				<div class="col-lg-12">
-					<label>
-						<input type="checkbox" name="naujienlaiskiai"> Noriu gauti naujienlaiškius
-					</label>
-				</div>
-			</div>
-			<div class="checkbox">
-				<div class="col-lg-12">
-					<label>
-						<input type="checkbox" name="taisykles"> Sutinku su taisyklėmis
-					</label>
-				</div>
-				<!-- cia reikia iterpti taisykliu puslapi -->
-				<a href="" class="btn btn-link">Skaityti taisykles</a>
-			</div>
-			<div class="checkbox">
-			</div>
 			<div class="form-group">
 				<input type="submit" name="submitreg" value="Registruotis" class="btn btn-primary" />
 			</div>
