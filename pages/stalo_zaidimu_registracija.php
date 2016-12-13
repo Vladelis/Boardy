@@ -1,14 +1,25 @@
 <?php
 include 'dbh.php';
+
+// Patikrina ar kas prisijunges, jei ne kill
+if(empty($_SESSION['user'])) {
+    header("Location: index.php");
+    die();
+}
+// Tik darbuotojas(id = 2) ir vadybininkas(id = 3)
+if($_SESSION['user']['fk_role_id']!=2 && $_SESSION['user']['fk_role_id']!=3) {
+    header("Location: index.php");
+    die();
+}
 // Patikrinti ar prisijunges kaip darbuotojas/vadybininkas
 //matoma tik darbuotojams/vadybininkams
 ?>
 <html>
     <body> 
 <?php
-    $gameTitleErr =  $gameLengthErr = $playersErr = $playersAgeErr = $descriptionErr = $photoErr= $languageErr = $yearsErr = $producerErr = $countryErr ="";
+    $gameTitleErr =  $gameLengthErr = $playersErr = $playersAgeErr = $descriptionErr = $photoErr= $categoryErr = $languageErr = $yearsErr = $producerErr = $countryErr ="";
     $gameTitle = $gameLength = $players = $playersAge = $description = $years = $producer = $photo = "";
-    $language = $country = "Pasirinkite";
+    $language = $country = $category = "Pasirinkite";
     $pap = $apd = $mok = 0;
     if(isset($_POST['submit']))
     {
@@ -43,6 +54,12 @@ include 'dbh.php';
             $uzpildyta = false;
         } else {
             $description = test_input($_POST["description"]);
+        }
+        if (($_POST["category"])=="Pasirinkite") {
+            $categoryErr = "*Neparinkta kategorija!";
+            $uzpildyta = false;
+        } else {
+            $category = test_input($_POST["category"]);
         }
         if (($_POST["language"])=="Pasirinkite") {
             $languageErr = "*Neparinkta kalba!";
@@ -92,10 +109,12 @@ include 'dbh.php';
         if($uzpildyta == true)
         {
             $sql = "INSERT INTO Zaidimas (pavadinimas, zaidimo_trukme, zaideju_skaicius, aprasymas, nuotrauka, kalba,
-                gamintojas, zaideju_amzius, turi_papildymu, gamintojo_salis, mokomasis, isleidimo_metai, turi_apdovanojimu) 
+                gamintojas, zaideju_amzius, turi_papildymu, gamintojo_salis, mokomasis, isleidimo_metai, turi_apdovanojimu, kategorijos_id) 
                     VALUES ('$gameTitle', '$gameLength', '$players', '$description', '$photo', '$language', '$producer',"
-                    . "'$playersAge', '$pap', '$country', '$mok', '$years', '$apd')";
+                    . "'$playersAge', '$pap', '$country', '$mok', '$years', '$apd', '$category')";
             $result = mysqli_query($conn, $sql);
+            $message = "Sukurtas naujas stalo žaidimas!";
+            echo "<script type='text/javascript'>alert('$message');</script>";
         }
     }
 ?>
@@ -149,7 +168,25 @@ include 'dbh.php';
     <div class="col-md-5">
           <br>
           <br>
-          <br>
+          <br>  
+        <div class="form-group">
+          <label for="category" class="col-lg-3 control-label">Kategorija</label>
+          <div class="col-lg-8">
+              <?php
+                $sqlI = "SELECT id, pavadinimas FROM Zaidimo_kategorija"; 
+                $resultI = mysqli_query($conn, $sqlI);
+              ?>
+            <select class="form-control" id="category" name="category">
+              <option selected><?php echo $category;?></option>
+              <?php
+                while($row = mysqli_fetch_array($resultI)) {
+                    echo'<option value='.$row[id].'>'.$row[pavadinimas].'</option>';
+                }
+              ?> 
+            </select>
+              <span class="error"><?php echo $languageErr;?></span>
+          </div>
+        </div>
         <div class="form-group">
           <label for="language" class="col-lg-3 control-label">Kalba</label>
           <div class="col-lg-8">
