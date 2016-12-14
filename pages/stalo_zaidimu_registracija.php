@@ -90,7 +90,7 @@ if($_SESSION['user']['fk_role_id']!=2 && $_SESSION['user']['fk_role_id']!=3) {
             $photoErr = "*Neįkelta nuotrauka!";
             $uzpildyta = false;
             echo "<script type='text/javascript'>alert('foto');</script>";
-        } else{
+        } else{     
             $photo = addslashes (file_get_contents($_FILES['img']['tmp_name']));
         }
         

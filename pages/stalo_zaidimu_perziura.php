@@ -57,9 +57,9 @@ $result = mysqli_query($conn, $sql);
                 //https://miketricking.github.io/dist/
         ?>
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="hovereffect">
+                <div class="hovereffect" style="height: 300px;">
                     <?php 
-                        echo '<img class="img-responsive" src="data:image/jpeg;base64,'.base64_encode( $row2['nuotrauka'] ).'"  alt="">';?>
+                        echo '<img object-fit= "contain" class="img-responsive" src="data:image/jpeg;base64,'.base64_encode( $row2['nuotrauka'] ).'"  alt="">';?>
                         <div class="overlay">
                            <h2><?php echo $row["pavadinimas"]; ?></h2>
                            <a class="info" href="/Boardy/index.php?module=stalo_zaidimai/stalo_zaidimu_rezervacija&id=<?php echo $row["id"];?>">Peržiūrėti</a>
