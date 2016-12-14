@@ -2,6 +2,23 @@
 	<?php
 		include 'classes/naujienlaiskis.class.php';
 		$newslettersObj = new newsletters();
+		if (empty($_SESSION['user']) || $_SESSION['user']['fk_role_id']==1 )
+		{
+				header("Location: index.php?module=noaccess");
+				die();
+		}
+		
+		if(!empty($removeNewsletterId)) {
+			$newslettersObj->deleteNewsletter($removeNewsletterId);
+			header("Location: index.php?module={$module}");
+			die();
+		}
+		
+		if(!empty($sendNewsletterId)) {
+			$newslettersObj->sendNewsletter($sendNewsletterId);
+			header("Location: index.php?module={$module}");
+			die();
+		}
 	?>
 
 		<div class="col-md-12">
@@ -16,10 +33,13 @@
 								foreach($data as $key => $val) {
 									echo "<div class='col-sm-4 newsletterItem'> <div class='newsletter-options'>";
 									if ($val['ar_issiustas']==0) {
-										echo"<a class='btn btn-xs btn-success' href='index.php?module=naujienlaiskis_redagavimas'&id={$val['id']}' class=:>Siusti</a>";
-										echo"<a class='btn btn-xs btn-info' href='index.php?module=naujienlaiskis_redagavimas'&id={$val['id']}' class=:>Redaguoti</a>";
+										echo"<a class='btn btn-xs btn-success' href='#' onclick='showNewsletterSendConfirm(\"{$module}\", \"{$val['id']}\"); return false;'>Siusti</a>";
+										echo"<a class='btn btn-xs btn-info' href='index.php?module=naujienlaiskis_redagavimas&id={$val['id']}'>Redaguoti</a>";
 									}
-									echo"<a class='btn btn-xs btn-danger' href='index.php?module=naujienlaiskis_redagavimas'&id={$val['id']}' class=:>Šalinti</a>";
+									else {
+										echo"<a class='btn btn-xs btn-info' href='index.php?module=naujienlaiskis_perziura&id={$val['id']}'>Peržiūrėti</a>";
+									}
+									echo"<a class='btn btn-xs btn-danger' href='#' onclick='showNewsletterDeleteConfirm(\"{$module}\", \"{$val['id']}\"); return false;'>Šalinti</a>";
 									echo"</div> <div class='mailIcon";
 									if ($val['ar_issiustas'] == 0)
 										echo " unsentMail'>";

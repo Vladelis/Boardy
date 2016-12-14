@@ -9,7 +9,7 @@
 			$query = "  INSERT INTO `Naujienlaiskis`
 									(
 										sukurimo_data,
-										laisko_turinys,
+										turinys,
 										antraste,
 										ar_issiustas,
 										komentaras,
@@ -31,6 +31,17 @@
 									)";
 			mysql::query($query);
 		}
+		public function updateNewsletter($data) {
+			$query = "  UPDATE 	`Naujienlaiskis`
+						SET 	turinys = '{$data['content']}',
+								antraste = '{$data['subject']}',
+								komentaras = '{$data['comment']}',
+								laisko_trumpinys = '{$data['snippet']}',
+								apibudinimas = '{$data['description']}'
+						WHERE	id = '{$data['id']}'";
+						
+			mysql::query($query);
+		}
 		
 		public function getNewsletters() {
 			$query = "  SELECT *
@@ -44,11 +55,31 @@
 		public function getNewsletterById($id) {
 			$query = "  SELECT *
 						FROM Naujienlaiskis 
-						ORDER BY ar_issiustas
+						WHERE id = '{$id}'
 						";
 			$data = mysql::select($query);
-			return $data;
+			if (count($data)==0)
+				return null;
+			else
+				return $data[0];
 		}
+		
+		public function deleteNewsletter($id) {
+			$query = "  DELETE FROM `Naujienlaiskis`
+						WHERE `id`='{$id}'";
+			mysql::query($query);
+		}
+		
+		public function sendNewsletter($id) {
+			$data = date("Y-m-d");
+			$query = "  UPDATE 	`Naujienlaiskis`
+						SET issiuntimo_data = '{$data}',
+							ar_issiustas = '1'
+						WHERE `id`='{$id}'";
+			mysql::query($query);
+		}
+		
+		
 	}
 
 ?>

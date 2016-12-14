@@ -16,6 +16,16 @@
 		$id = mysql::escape($_GET['id']);
 	}
 	
+	$removeNewsletterId = 0;
+	if(!empty($_GET['removeNewsletter'])) {
+		$removeNewsletterId = mysql::escape($_GET['removeNewsletter']);
+	}
+	
+	$sendNewsletterId = 0;
+	if(!empty($_GET['sendNewsletter'])) {
+		$sendNewsletterId = mysql::escape($_GET['sendNewsletter']);
+	}
+	
 	// Atsijungiame
 	if(isset($_POST['atsijungimas']) && !empty($_SESSION['user'])) {
 		session_unset();
