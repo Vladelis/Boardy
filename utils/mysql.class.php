@@ -152,7 +152,7 @@ class mysql {
 	
 	function checkUserLogin($email, $slaptazodis) {
 		$q = 
-		"SELECT `Klientas`.`email`, `Klientas`.`ar_patvirtintas`, `Klientas`.`fk_role_id`
+		"SELECT `Klientas`.`id`, `Klientas`.`email`, `Klientas`.`ar_patvirtintas`, `Klientas`.`fk_role_id`
 		FROM  `harhib`.`Klientas`
 		WHERE  `email` = '".$email."' AND `slaptazodis` = '".$slaptazodis."'"
 		;
@@ -170,7 +170,7 @@ class mysql {
 	
 	function checkDarbuotojasLogin($email, $slaptazodis) {
 		$q = 
-		"SELECT `Darbuotojas`.`email`, `Darbuotojas`.`kodas`, `Darbuotojas`.`fk_role_id`
+		"SELECT `Darbuotojas`.`id`, `Darbuotojas`.`email`, `Darbuotojas`.`kodas`, `Darbuotojas`.`fk_role_id`
 		FROM  `harhib`.`Darbuotojas`
 		WHERE  `email` = '".$email."' AND `slaptazodis` = '".$slaptazodis."'"
 		;
