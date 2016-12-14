@@ -49,19 +49,24 @@
 
 				<div class="collapse navbar-collapse">
 				  <ul class="nav navbar-nav">
-					<li><a href='index.php?module=item1'>Item1</a></li>
-					<li><a href='index.php?module=item2'>Item2</a></li>
-                                        <li><a href='index.php?module=stalo_zaidimu_perziura'>Stalo žaidimai</a></li>
-                                        
+                     <li><a href='index.php?module=stalo_zaidimu_perziura'>Stalo žaidimai</a></li>
 										<?php
 											if(!empty($_SESSION['user'])) {
 												if($_SESSION['user']['fk_role_id']==2 || $_SESSION['user']['fk_role_id']==3) {
 													echo '
-                                                                                                                <li><a href="index.php?module=stalo_zaidimu_registracija">Naujas stalo žaidimas</a></li>
+														<li class="dropdown">
+															<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Valdymo panelė<span class="caret"></span></a>
+															<ul class="dropdown-menu" role="menu">
+																<li><a href="index.php?module=stalo_zaidimu_registracija">Naujas stalo žaidimas</a></li>
+																<li><a href="index.php?module=naujienlaiskiai_sarasas">Naujienlaiškiai</a></li>
+																<li><a href="index.php?module=pasiulymai_sarasas">Specialūs pasiūlymai</a></li>
+															</ul>
+														</li>
 														<li class="dropdown">
 															<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Profilų kūrimas<span class="caret"></span></a>
 															<ul class="dropdown-menu" role="menu">
 																<li><a href="index.php?module=kliento_profilio_kurimas">Registruoti vartotoją</a></li>
+														
 													';		
 													// Cia ideti patikrinima tik vadybininkui
 													if($_SESSION['user']['fk_role_id']==3) {
