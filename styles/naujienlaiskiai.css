@@ -9,7 +9,7 @@
 	color:white;
 	vertical-align: middle;
 	line-height: 80px; 
-	margin:20px;
+	margin:0 20px 20px 20px;
 	
 }
 
@@ -24,7 +24,20 @@
 .newsletterItem {
 	transition: background-color 0.6s;
 }
+
+.newsletterItem h4{
+	margin-top:0;
+}
 .newsletterItem:hover{
-	background-color:#FFEBEB;
-	cursor:pointer;
+	background-color:#f2f2f2;
+}
+.newsletter-options a {
+	margin-right:5px;
+}
+
+.newsletter-options {
+	padding-bottom:5px;
+	margin-bottom:5px;
+	padding-top:10px;
+	border-bottom:1px solid gray;
 }

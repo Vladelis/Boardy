@@ -4,42 +4,21 @@
 		$newslettersObj = new newsletters();
 		
 		if(isset($_POST['submitCreateNewsletter'])) {
+			$snippet = $_POST['comment'];
+			if (strlen($snippet) > 35 )
+				$snippet = substr($snippet,0,35) . "...";
 			
 			$data = array (
 				'subject' => $_POST['subject'],
 				'description' => $_POST['description'],
 				'comment' => $_POST['comment'],
 				'date' => date("Y-m-d"),
-				'content' => htmlspecialchars($_REQUEST['contents'])
+				'content' => htmlspecialchars($_REQUEST['contents']),
+				'user' => $_SESSION['user']['id'],
+				'snippet' => $snippet
 			);
-			
-			
-
-			$query = "  INSERT INTO `Naujienlaiskis`
-									(
-										sukurimo_data,
-										laisko_turinys,
-										antraste,
-										ar_issiustas,
-										komentaras,
-										kurejoId,
-										laisko_trumpinys,
-										apibudinimas
-									)
-									VALUES
-									(
-										'{$data['date']}',
-										'{$data['content']}',
-										'{$data['subject']}',
-										'0',
-										'{$data['comment']}',
-										'0',
-										'asd',
-										'{$data['description']}'
-										
-									)";
-			mysql::query($query);
-			header("Location: index.php?module=item1");
+			$newslettersObj -> createNewsletter($data);
+			header("Location: index.php?module=naujienlaiskiai_sarasas");
 			die();
 		}
 	?>

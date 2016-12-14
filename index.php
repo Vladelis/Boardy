@@ -11,6 +11,11 @@
 		$module = mysql::escape($_GET['module']);
 	}
 	
+	$id = '';
+	if(isset($_GET['id'])) {
+		$id = mysql::escape($_GET['id']);
+	}
+	
 	// Atsijungiame
 	if(isset($_POST['atsijungimas']) && !empty($_SESSION['user'])) {
 		session_unset();
