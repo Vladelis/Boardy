@@ -34,7 +34,7 @@ if($genre!=0)
 if($length!="")
 {
     $min = substr($length, -5);
-    $simbolis = substr($length, 0, 1); // numetu +
+    $simbolis = substr($length, 0, 1);
     if($simbolis == ">")
     {
         $sql = $sql." AND zaidimo_trukme > '".$min."'";
@@ -42,7 +42,6 @@ if($length!="")
     else {
         $sql = $sql." AND zaidimo_trukme <= '".$min."'";
     }
-    //$kazkas = " AND zaidimo_trukme".$length;
     echo "<script type='text/javascript'>alert('$sql');</script>";
 }
 $result = mysqli_query($conn, $sql);
@@ -51,13 +50,11 @@ $result = mysqli_query($conn, $sql);
     <body> 
         <?php
             while($row = mysqli_fetch_array($result)) {
-                //paimti tik viena reiksme
                 $sql2 = "SELECT * FROM Zaidimas WHERE id=" . $row["id"];
                 
                 $result2 = mysqli_query($conn, $sql2); //or die("<b>Error:</b> Problem on Retrieving Image BLOB<br/>" . mysqli_error());
                 $row2 = mysqli_fetch_array($result2);
                 //https://miketricking.github.io/dist/
-                //jei rasta reiksme
         ?>
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="hovereffect">
