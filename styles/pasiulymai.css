@@ -1,0 +1,43 @@
+
+.offerIcon {
+	float:left;
+	height:80px;
+	width:80px;
+	border-radius:100px;
+	text-align:center;
+	font-size:250%;
+	color:white;
+	vertical-align: middle;
+	line-height: 80px; 
+	margin:0 20px 20px 20px;
+	
+}
+
+.activeOffer {
+	background-color:#f5e625;
+}
+
+.inactiveOffer {
+	background-color:#22b24c;
+}
+
+.offerItem {
+	transition: background-color 0.6s;
+}
+
+.offerItem h4{
+	margin-top:0;
+}
+.offerItem:hover{
+	background-color:#f2f2f2;
+}
+.offerItem-options a {
+	margin-right:5px;
+}
+
+.offerItem-options {
+	padding-bottom:5px;
+	margin-bottom:5px;
+	padding-top:10px;
+	border-bottom:1px solid gray;
+}

@@ -46,7 +46,7 @@
 		public function getNewsletters() {
 			$query = "  SELECT *
 						FROM Naujienlaiskis 
-						ORDER BY ar_issiustas
+						ORDER BY ar_issiustas, antraste
 						";
 			$data = mysql::select($query);
 			return $data;

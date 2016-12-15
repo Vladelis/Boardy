@@ -37,10 +37,10 @@
 										echo"<a class='btn btn-xs btn-info' href='index.php?module=naujienlaiskis_redagavimas&id={$val['id']}'>Redaguoti</a>";
 									}
 									else {
-										echo"<a class='btn btn-xs btn-info' href='index.php?module=naujienlaiskis_perziura&id={$val['id']}'>Peržiūrėti</a>";
+										echo"<a class='btn btn-xs btn-info' href='index.php?module=naujienlaiskis_redagavimas&id={$val['id']}'>Peržiūrėti</a>";
 									}
 									echo"<a class='btn btn-xs btn-danger' href='#' onclick='showNewsletterDeleteConfirm(\"{$module}\", \"{$val['id']}\"); return false;'>Šalinti</a>";
-									echo"</div> <div class='mailIcon";
+									echo"</div> <div class='offerIcon";
 									if ($val['ar_issiustas'] == 0)
 										echo " unsentMail'>";
 									else 

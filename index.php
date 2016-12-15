@@ -47,6 +47,7 @@
 		<link rel="stylesheet" type="text/css" href="styles/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="styles/site.css">
 		<link rel="stylesheet" type="text/css" href="styles/naujienlaiskiai.css">
+		<link rel="stylesheet" type="text/css" href="styles/pasiulymai.css">
 	</head>
 	<body>
 
