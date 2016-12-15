@@ -26,6 +26,21 @@
 		$sendNewsletterId = mysql::escape($_GET['sendNewsletter']);
 	}
 	
+	$removeOfferId = 0;
+	if(!empty($_GET['removeOffer'])) {
+		$removeOfferId = mysql::escape($_GET['removeOffer']);
+	}
+	
+	$activateOfferId = 0;
+	if(!empty($_GET['activateOffer'])) {
+		$activateOfferId = mysql::escape($_GET['activateOffer']);
+	}
+	
+	$deactivateOfferId = 0;
+	if(!empty($_GET['deactivateOffer'])) {
+		$deactivateOfferId = mysql::escape($_GET['deactivateOffer']);
+	}
+	
 	// Atsijungiame
 	if(isset($_POST['atsijungimas']) && !empty($_SESSION['user'])) {
 		session_unset();

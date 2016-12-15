@@ -24,12 +24,47 @@
 				'date' => date("Y-m-d"),
 				'count' => sizeof($games),
 				'user' => $_SESSION['user']['id'],
-				'discount' => $nuolaida
+				'discount' => $_POST['nuolaida']
 			);
 			$offersObj -> createOffer($data);
-			echo ("<script>alert({$type});</script>");
+			
+			$lastId = getLastId();
+			
+			foreach ($games as &$value) {
+				$offersObj -> addGameIds($lastId,$value);
+			}
+			
 			header("Location: index.php?module=pasiulymai_sarasas");
 			die();
+		}
+		
+		if(isset($_POST['submitUpdateOffer'])) {
+			$games = json_decode($_REQUEST['contents']);
+			$type=$_POST['tipas'];
+
+			
+			$data = array (
+				'name' => $_POST['name'],
+				'tipe' => $type,
+				'comment' => $_POST['comment'],
+				'count' => sizeof($games),
+				'discount' => $_POST['nuolaida'],
+				'id' => $id
+			);
+			$offersObj -> updateOffer($data);
+			$offersObj->removeOffer($id);
+			
+			foreach ($games as &$value) {
+				$offersObj -> addGameIds($id,$value);
+			}
+			
+			header("Location: index.php?module=pasiulymai_sarasas");
+			die();
+		}
+		
+			function getLastId() {
+			$connection = mysql::connect();
+			return $connection->insert_id;
 		}
 		
 	?>
@@ -67,11 +102,16 @@
 					<textarea class="form-control" rows="3" placeholder="Komentaras" name="comment" style="resize:none"><?php echo $offer['komentaras'] ?></textarea>
 				</div>
 				<div id="BoardGameList">
-					
+					<?php
+						$selectGames = $offersObj -> getGamesById($id);
+						foreach($selectGames   as $key => $val) {
+									echo "<div class='panel panel-default'><div class='panel-body'><strong class='aad'>{$val['pavadinimas']}</strong><button class='btn btn-danger btn-xs itembutton' type='button' style='float:right'>Pašalinti<span class='itemm' style='display:none'>{$val['id']}</span><span class='itemmm' style='display:none'>{$val['pavadinimas']}</span></button></div></div>"; 
+							}
+					?>
 					
 				</div>
 				<div class="form-group">
-						<label >Stalo žaidimai</label> <button class="btn btn-primary btn-sm" style="margin:10px" onclick="addGame()" type="button">Pridėti žaidimą</button>
+						<label >Stalo žaidimai</label> <button class="btn btn-primary btn-sm " id="gameAddButton" style="margin:10px" type="button">Pridėti žaidimą</button>
 						<select name="game" class="form-control" id="zaidimai" value="<?php echo $repair['Klientas'] ?>">
 							<option value="-1">---------------</option>
 							<?php
@@ -85,9 +125,9 @@
 							?>
 						</select>
 					</div>
-				<a href="index.php?module=naujienlaiskiai_sarasas" class="btn btn-default"> Grįžti </a>
+				<a href="index.php?module=pasiulymai_sarasas" class="btn btn-default"> Grįžti </a>
 				<?php 
-					if (!empty($newsletter['id']))
+					if (!empty($offer['id']))
 						echo "<input class='btn btn-primary' type='submit' name='submitUpdateOffer' value='Atnaujinti' onclick='addData()'/>";
 					else
 						echo "<input class='btn btn-primary' type='submit' name='submitCreateOffer' value='Sukurti' onclick='addData()'/>";
@@ -97,6 +137,13 @@
 		</div>
 		
 		<script>
+			var boardgames = [];
+			<?php
+				foreach($selectGames   as $key => $val) {
+					echo "boardgames.push('{$val['id']}');";
+				}
+			?>
+			console.log(boardgames);
 			function toggleDiscount(item) {
 				if (item.value == 1) 
 					$("#discountItem").show();
@@ -104,13 +151,22 @@
 					$("#discountItem").hide();
 			}
 			
-			var boardgames = [];
-			function addGame() {
+			$('#gameAddButton').on( 'click', function() {
 				if ($("#zaidimai").val() != -1) {
-					$("#BoardGameList").append("<div class='panel panel-default'><div class='panel-body'><strong>" + $("#zaidimai :selected").text() + "<button class='btn btn-danger btn-xs' type='button' style='float:right'>Pašalinti</button></strong></div></div>");
+					$("#BoardGameList").append("<div class='panel panel-default'><div class='panel-body'><strong class='aad'>" + $("#zaidimai :selected").text() + "</strong><button class='btn btn-danger btn-xs itembutton' type='button' style='float:right'>Pašalinti<span class='itemm' style='display:none'>"+$('#zaidimai').val()+"</span><span class='itemmm' style='display:none'>"+$("#zaidimai :selected").text()+"</span></button></div></div>");
 					boardgames.push($("#zaidimai").val());
+					$('#zaidimai option[value="' + $("#zaidimai").val()+ '"]').remove();
 				}
-			}
+				console.log(boardgames);
+			});
+			
+			$('#BoardGameList').on('click', '.itembutton', function() {
+				boardgames.splice(boardgames.indexOf($(this).find(".itemm").text()), 1);
+				$("#zaidimai").append("<option value='"+$(this).find('.itemm').text()+"' >"+$(this).find('.itemmm').text()+"</option>");
+				$(this).parent().parent().remove();
+				console.log(boardgames);
+			});
+			
 			
 			function addData() {
 				var x= JSON.stringify(boardgames);

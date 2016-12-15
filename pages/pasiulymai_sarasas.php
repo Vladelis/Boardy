@@ -12,6 +12,19 @@
 			header("Location: index.php?module={$module}");
 			die();
 		}
+		
+		if(!empty($activateOfferId)) {
+			$offersObj->activateOffer($activateOfferId);
+			$offersObj->removeOffer($activateOfferId);
+			header("Location: index.php?module={$module}");
+			die();
+		}
+		
+		if(!empty($deactivateOfferId)) {
+			$offersObj->deactivateOffer($deactivateOfferId);
+			header("Location: index.php?module={$module}");
+			die();
+		}
 	?>
 
 		<div class="col-md-12">
@@ -23,16 +36,16 @@
 							$data = $offersObj -> getOffers();
 								foreach($data as $key => $val) {
 									echo "<div class='col-sm-4 offerItem'> <div class='offerItem-options'>";
-									if ($val['ar_galioja']==0) {
-										echo"<a class='btn btn-xs btn-warning' href='#' onclick='showNewsletterSendConfirm(\"{$module}\", \"{$val['id']}\"); return false;'>Išjungti</a>";
-										echo"<a class='btn btn-xs btn-info' href='index.php?module=naujienlaiskis_redagavimas&id={$val['id']}'>Redaguoti</a>";
+									if ($val['ar_galioja']==1) {
+										echo"<a class='btn btn-xs btn-warning' href='#' onclick='showOfferDeactivateConfirm(\"{$module}\", \"{$val['id']}\"); return false;'>Išjungti</a>";
 									}
 									else {
-										echo"<a class='btn btn-xs btn-success' href='index.php?module=naujienlaiskis_redagavimas&id={$val['id']}'>Aktyvuoti</a>";
+										echo"<a class='btn btn-xs btn-success' href='#' onclick='showOfferActivateConfirm(\"{$module}\", \"{$val['id']}\"); return false;'>Įjungti</a>";
+										echo"<a class='btn btn-xs btn-info' href='index.php?module=pasiulymas_redagavimas&id={$val['id']}'>Redaguoti</a>";
+										echo"<a class='btn btn-xs btn-danger' href='#' onclick='showOfferDeleteConfirm(\"{$module}\", \"{$val['id']}\"); return false;'>Šalinti</a>";
 									}
-									echo"<a class='btn btn-xs btn-danger' href='#' onclick='showNewsletterDeleteConfirm(\"{$module}\", \"{$val['id']}\"); return false;'>Šalinti</a>";
 									echo"</div> <div class='offerIcon";
-									if ($val['ar_galioja'] == 0)
+									if ($val['ar_galioja'] == 1)
 										echo " activeOffer'>";
 									else 
 										echo " inactiveOffer'>";

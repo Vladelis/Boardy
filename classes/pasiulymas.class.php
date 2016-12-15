@@ -33,18 +33,7 @@
 									)";
 			mysql::query($query);
 		}
-		public function updateNewsletter($data) {
-			$query = "  UPDATE 	`Naujienlaiskis`
-						SET 	turinys = '{$data['content']}',
-								antraste = '{$data['subject']}',
-								komentaras = '{$data['comment']}',
-								laisko_trumpinys = '{$data['snippet']}',
-								apibudinimas = '{$data['description']}'
-						WHERE	id = '{$data['id']}'";
-						
-			mysql::query($query);
-		}
-	
+
 		public function getOfferById($id) {
 			$query = "  SELECT *
 						FROM Specialus_pasiulymas
@@ -57,9 +46,42 @@
 				return $data[0];
 		}
 		
-		public function deleteNewsletter($id) {
-			$query = "  DELETE FROM `Naujienlaiskis`
+		public function deleteOffer($id) {
+			$query = "  DELETE FROM `Specialus_pasiulymas`
 						WHERE `id`='{$id}'";
+			mysql::query($query);
+		}
+		
+		public function removeOffer($id) {
+			$query = "  UPDATE 	`Zaidimas`
+						SET 	spec_pasiulymas = NULL
+						WHERE	spec_pasiulymas = '{$id}'";
+			mysql::query($query);
+		}
+		
+		
+		public function activateOffer($id) {
+			$query = "  UPDATE 	`Specialus_pasiulymas`
+						SET 	ar_galioja = '1'
+						WHERE	id = '{$id}'";
+			mysql::query($query);
+		}
+		
+		public function updateOffer($data) {
+			$query = "  UPDATE 	`Specialus_pasiulymas`
+						SET 	tipas = '{$data['tipe']}',
+								Pavadinimas = '{$data['name']}',
+								komentaras = '{$data['comment']}',
+								zaidimu_skaicius = '{$data['count']}',
+								nuolaidos_dydis = '{$data['discount']}'
+						WHERE	id = '{$data['id']}'";
+			mysql::query($query);
+		}
+		
+		public function deactivateOffer($id) {
+			$query = "  UPDATE 	`Specialus_pasiulymas`
+						SET 	ar_galioja = '0'
+						WHERE	id = '{$id}'";
 			mysql::query($query);
 		}
 		
@@ -76,7 +98,7 @@
 		public function getOffers() {
 			$query = "  SELECT *
 						FROM Specialus_pasiulymas
-						ORDER BY ar_galioja, Pavadinimas
+						ORDER BY ar_galioja DESC, Pavadinimas
 						";
 			$data = mysql::select($query);
 			return $data;
@@ -86,6 +108,23 @@
 			$query = "  SELECT *
 						FROM Zaidimas
 						WHERE spec_pasiulymas IS NULL
+						ORDER BY pavadinimas
+						";
+			$data = mysql::select($query);
+			return $data;
+		}
+		
+		public function addGameIds($id, $value) {
+			$query = "  UPDATE 	`Zaidimas`
+						SET 	spec_pasiulymas = '{$id}'
+						WHERE	id = '{$value}'";
+			mysql::query($query);
+		}
+		
+		public function getGamesById($id) {
+			$query = "  SELECT *
+						FROM Zaidimas
+						WHERE spec_pasiulymas = '{$id}'
 						ORDER BY pavadinimas
 						";
 			$data = mysql::select($query);
