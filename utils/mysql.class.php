@@ -339,6 +339,145 @@ class mysql {
 		return $result;
 	}
 	
+	function insertNewBiuras($el_pastas, $tel_nr, $darbo_laikas, $faksas, $isteigimo_data, $pavadinimas, $banko_saskaita, $gatve, 
+		$miestas, $rajonas, $salis, $komentaras, $aukstas_pastate, $kabineto_nr)
+	{
+		$query = "INSERT INTO `harhib`.`Adresas` (
+			`gatve` ,
+			`miestas` ,
+			`rajonas` ,
+			`salis` ,
+			`komentaras` ,
+			`aukstas_pastate` ,
+			`kabineto_nr`
+		)
+		VALUES (
+			'".$gatve."', 
+			'".$miestas."',
+			'".$rajonas."',
+			'".$salis."',
+			'".$komentaras."',
+			'".$aukstas_pastate."',
+			'".$kabineto_nr."'
+		)";
+		
+		$result = self::query($query);
+		if (!$result) {
+			echo 'false';
+			return NULL;
+		}
+		
+		//katik sukurto adreso id
+		$lastID = self::getLastInsertedId();
+		
+		$query = "INSERT INTO `harhib`.`Biuras` (
+			`el_pastas` ,
+			`tel_nr` ,
+			`darbo_laikas` ,
+			`faksas` ,
+			`isteigimo_data` ,
+			`pavadinimas` ,
+			`banko_saskaita` ,
+			`adresas_id`
+		)
+		VALUES (
+			'".$el_pastas."',
+			'".$tel_nr."',
+			'".$darbo_laikas."',
+			'".$faksas."',
+			'".$isteigimo_data."',
+			'".$pavadinimas."',
+			'".$banko_saskaita."',
+			'".$lastID."' 
+		)";
+		
+		$result = self::query($query);
+		if (!$result) {
+			echo 'false';
+			return NULL;
+		}
+		return $result;
+	}
+	
+	//Grazina visu biuru masyva
+	function getBiurai() 
+	{
+		//SELECT * FROM Biuras, Adresas WHERE Biuras.adresas_id = Adresas.id
+		$query = "SELECT * FROM `harhib`.`Biuras`,`harhib`.`Adresas` WHERE Biuras.adresas_id = Adresas.id";
+		$result = self::select($query);
+		return $result;
+	}
+	
+	//Grazina biura pagal id
+	function getBiuras($biuro_id) 
+	{
+		//SELECT * FROM Biuras, Adresas WHERE Biuras.adresas_id = Adresas.id
+		$query = "SELECT * FROM `harhib`.`Biuras`,`harhib`.`Adresas` WHERE Biuras.adresas_id = Adresas.id AND Biuras.id = ".$biuro_id.";";
+		$result = self::select($query);
+		return $result;
+	}
+	
+	function updateBiuras($el_pastas, $tel_nr, $darbo_laikas, $faksas, $isteigimo_data, $pavadinimas, $banko_saskaita, $gatve, 
+		$miestas, $rajonas, $salis, $komentaras, $aukstas_pastate, $kabineto_nr, $adresas_id, $biuro_id)
+	{
+		
+		//atnaujina adresa
+		$query = 
+		"UPDATE `harhib`.`Adresas` SET 
+			`gatve`='".$gatve."',
+			`miestas`='".$miestas."',
+			`rajonas`='".$rajonas."',
+			`salis`='".$salis."',
+			`komentaras`='".$komentaras."',
+			`aukstas_pastate`='".$aukstas_pastate."',
+			`kabineto_nr`='".$kabineto_nr."'
+		WHERE Adresas.id=".$adresas_id."";
+		
+		$result = self::query($query);
+		if (!$result) {
+			echo $result;
+			return NULL;
+		}
+		
+		//atnaujina biura
+		$query = "UPDATE `harhib`.`Biuras` SET
+			`el_pastas`='".$el_pastas."',
+			`tel_nr`='".$tel_nr."',
+			`darbo_laikas`='".$darbo_laikas."',
+			`faksas`='".$faksas."',
+			`isteigimo_data`='".$isteigimo_data."',
+			`pavadinimas`='".$pavadinimas."',
+			`banko_saskaita`='".$banko_saskaita."'
+		WHERE Biuras.id=".$biuro_id."";
+		
+		$result = self::query($query);
+		if (!$result) {
+			echo 'false';
+			return NULL;
+		}
+		
+		return $result;
+	}
+	
+	function trintiBiura($biuras_id, $adresas_id)
+	{
+		$query = "DELETE FROM `harhib`.`Adresas` WHERE id=".$adresas_id."";
+		$result = self::query($query);
+		if (!$result) {
+			echo 'false';
+			return NULL;
+		}
+		
+		$query = "DELETE FROM `harhib`.`Biuras` WHERE id=".$biuras_id."";
+		$result = self::query($query);
+		if (!$result) {
+			echo 'false';
+			return NULL;
+		}
+		
+		return $result;
+	}
+	
     /**
      * Query the database
      *

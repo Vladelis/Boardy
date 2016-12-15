@@ -113,6 +113,20 @@
 														
 													';
 												}
+												//Biuro valdymu meniu vadybininkams
+												if($_SESSION['user']['fk_role_id']==3)
+												{
+													echo'
+														<li class="dropdown">
+															<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Biurų valdymas<span class="caret"></span></a>
+															<ul class="dropdown-menu" role="menu">
+																<li><a href="index.php?module=biuro_kurimas">Naujo biuro kūrimas</a></li>
+																<li><a href="index.php?module=biuro_redagavimas">Biuro redagavimas</a></li>
+																<li><a href="index.php?module=biuro_trynimas">Biuro trynimas</a></li>
+															</ul>
+														</li>
+													';
+												}
 											}
 								?>
 				  </ul>
