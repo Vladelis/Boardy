@@ -91,6 +91,7 @@
 																<li><a href="index.php?module=stalo_zaidimu_registracija">Naujas stalo žaidimas</a></li>
 																<li><a href="index.php?module=naujienlaiskiai_sarasas">Naujienlaiškiai</a></li>
 																<li><a href="index.php?module=pasiulymai_sarasas">Specialūs pasiūlymai</a></li>
+																<li><a href="index.php?module=bylos_sarasas">Bylos</a></li>
 															</ul>
 														</li>
 														<li class="dropdown">
