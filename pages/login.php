@@ -24,7 +24,7 @@
 					$db = new mysql();
 					$result = $db -> checkUserLogin($email, md5($password));
 					if(isset($result)) {
-						if($result[0]['ar_patvirtintas']==0) {
+						if(false) {
 							echo "<div class='alert alert-dismissible alert-danger form-group'>
 							<p>Vartotojas nepatvirtintas, prašome pasitikrinti elektroninį paštą ir patvirtinti vartotoją</p>
 							</div>";
