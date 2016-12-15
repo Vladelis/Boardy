@@ -33,6 +33,23 @@ class mysql {
         return self::$connection;
     }
 	
+	function insertRedagavimoIstorija($ip, $redaguotoId, $redaguotojoId, $tipas) {
+		$q = 
+		"INSERT INTO  `harhib`.`Redagavimo_istorija` (
+			`id` ,
+			`data_laikas` ,
+			`redaguotas_profilis` ,
+			`kas_redagavo` ,
+			`ip_adresas` ,
+			`fk_tipas`
+		)
+		VALUES (
+			NULL , CURTIME(),  '".$redaguotoId."',  '".$redaguotojoId."',  '".$ip."',  '".$tipas."'
+		);";
+		$result = self::query($q);
+		return $result;
+	}
+	
 	function deleteKlientas($email) {
 		$q = "
 		DELETE FROM `harhib`.`Klientas` WHERE  `Klientas`.`email` = '".$email."';
@@ -191,6 +208,24 @@ class mysql {
 		"SELECT `Klientas`.`email`
 		FROM  `harhib`.`Klientas`
 		WHERE  `email` = '".$email."'";
+		$result = self::select($q);
+		return $result;
+	}
+	
+	function getKlientasId($email) {
+		$q = 
+		"SELECT `Klientas`.`id`
+		FROM  `harhib`.`Klientas`
+		WHERE  `email` = '".$email."'";
+		$result = self::select($q);
+		return $result;
+	}
+	
+	function getDarbuotojasId($kodas) {
+		$q = 
+		"SELECT `Darbuotojas`.`id`
+		FROM  `harhib`.`Darbuotojas`
+		WHERE  `kodas` = '".$kodas."'";
 		$result = self::select($q);
 		return $result;
 	}

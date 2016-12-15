@@ -283,6 +283,14 @@
 			die();
 		} else {
 			$db -> redaguotiKlientoVarda($_POST['epastas'], $_POST['vardasKlientasRed']);
+			$redaguotoId = $db -> getKlientasId($_POST['epastas']);
+			$tipas = "";
+			if($_SESSION['user']['fk_role_id']==1) {
+				$tipas = "klientas_save";
+			} else {
+				$tipas = "darbuotojas_klienta";
+			}
+			$db -> insertRedagavimoIstorija($_SERVER['REMOTE_ADDR'], current($redaguotoId[0]), $_SESSION['user']['id'], $tipas);
 			echo '
 				<div class="col-md-8">
 					<div class="alert alert-success">
@@ -299,6 +307,14 @@
 			die();
 		} else {
 			$db -> redaguotiKlientoPavarde($_POST['epastas'], $_POST['pavardeKlientasRed']);
+			$redaguotoId = $db -> getKlientasId($_POST['epastas']);
+			$tipas = "";
+			if($_SESSION['user']['fk_role_id']==1) {
+				$tipas = "klientas_save";
+			} else {
+				$tipas = "darbuotojas_klienta";
+			}
+			$db -> insertRedagavimoIstorija($_SERVER['REMOTE_ADDR'], current($redaguotoId[0]), $_SESSION['user']['id'], $tipas);
 			echo '
 				<div class="col-md-8">
 					<div class="alert alert-success">
@@ -332,6 +348,14 @@
 				}
 				else {
 					$db -> redaguotiKlientoSlapyvardi($_POST['epastas'], $_POST['slapyvardisKlientasRed']);
+					$redaguotoId = $db -> getKlientasId($_POST['epastas']);
+					$tipas = "";
+						if($_SESSION['user']['fk_role_id']==1) {
+						$tipas = "klientas_save";
+					} else {
+						$tipas = "darbuotojas_klienta";
+					}
+					$db -> insertRedagavimoIstorija($_SERVER['REMOTE_ADDR'], current($redaguotoId[0]), $_SESSION['user']['id'], $tipas);
 					echo '
 						<div class="col-md-8">
 							<div class="alert alert-success">
@@ -351,8 +375,24 @@
 		} else {
 			if($_POST['naujienlaiskisKlientasRed']==1) {
 				$db -> redaguotiKlientoNaujienlaiskius($_POST['epastas'], 0); 
+				$redaguotoId = $db -> getKlientasId($_POST['epastas']);
+				$tipas = "";
+				if($_SESSION['user']['fk_role_id']==1) {
+					$tipas = "klientas_save";
+				} else {
+					$tipas = "darbuotojas_klienta";
+				}
+				$db -> insertRedagavimoIstorija($_SERVER['REMOTE_ADDR'], current($redaguotoId[0]), $_SESSION['user']['id'], $tipas);
 			} else {
 				$db -> redaguotiKlientoNaujienlaiskius($_POST['epastas'], 1); 
+				$redaguotoId = $db -> getKlientasId($_POST['epastas']);
+				$tipas = "";
+				if($_SESSION['user']['fk_role_id']==1) {
+					$tipas = "klientas_save";
+				} else {
+					$tipas = "darbuotojas_klienta";
+				}
+				$db -> insertRedagavimoIstorija($_SERVER['REMOTE_ADDR'], current($redaguotoId[0]), $_SESSION['user']['id'], $tipas);
 			}
 			echo '
 				<div class="col-md-8">
@@ -362,7 +402,7 @@
 				</div>
 			';
 		}
-	}
+	}	
 	// Vykdomas slaptazodzio keitimas
 	if(isset($_POST['submitredSlap'])) {
 		if($_SESSION['user']['fk_role_id']==1 && $_SESSION['user']['email']!=$_POST['epastas']) {
@@ -401,6 +441,14 @@
 				';
 				} else {
 					$db -> redaguotiKlientoSlaptazodi($_POST['epastas'],md5($_POST['slaptazodisKlientasRed']));
+					$redaguotoId = $db -> getKlientasId($_POST['epastas']);
+					$tipas = "";
+					if($_SESSION['user']['fk_role_id']==1) {
+						$tipas = "klientas_save";
+					} else {
+						$tipas = "darbuotojas_klienta";
+					}
+					$db -> insertRedagavimoIstorija($_SERVER['REMOTE_ADDR'], current($redaguotoId[0]), $_SESSION['user']['id'], $tipas);
 					echo '
 						<div class="col-md-8">
 							<div class="alert alert-success">
@@ -430,6 +478,8 @@
 				';
 			} else {
 				$db -> redaguotiDarbuotojoEmail($_POST['kodas'], $_POST['emailDarbuotojasRed']);
+				$redaguotoId = $db -> getDarbuotojasId($_POST['kodas']);
+				$db -> insertRedagavimoIstorija($_SERVER['REMOTE_ADDR'], current($redaguotoId[0]), $_SESSION['user']['id'], "darbuotojas_darbuotoja");
 				echo '
 					<div class="col-md-8">
 						<div class="alert alert-success">
@@ -476,6 +526,8 @@
 				';
 				} else {
 					$db -> redaguotiDarbuotojoSlaptazodi($_POST['kodas'],md5($_POST['slaptazodisDarbuotojasRed']));
+					$redaguotoId = $db -> getDarbuotojasId($_POST['kodas']);
+					$db -> insertRedagavimoIstorija($_SERVER['REMOTE_ADDR'], current($redaguotoId[0]), $_SESSION['user']['id'], "darbuotojas_darbuotoja");
 					echo '
 						<div class="col-md-8">
 							<div class="alert alert-success">
