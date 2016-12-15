@@ -6,7 +6,7 @@
 	
 	
 	// iškviečiame prisijungimo prie duomenų bazės klasę
-	$module = 'home';
+	$module = 'stalo_zaidimu_perziura';
 	if(isset($_GET['module'])) {
 		$module = mysql::escape($_GET['module']);
 	}
@@ -115,7 +115,6 @@
 												}
 											}
 								?>
-					<li><a href='https://bootswatch.com/journal/'>Nuoroda į temą</a></li>
 				  </ul>
 				  <ul class="nav navbar-nav navbar-right">
 						<?php
