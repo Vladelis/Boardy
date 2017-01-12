@@ -17,7 +17,7 @@ if(isset($_POST['patvirtinti']))
     $datetime1 = strtotime($from);
     $datetime2 = strtotime($to);
     
-    if($datetime1> $datetime2)
+    if($datetime1> $datetime2 || $today > $from)
     {
         $message = "Neteisingai  įvestos datos!";
         echo "<script type='text/javascript'>alert('$message');</script>";
