@@ -14,6 +14,7 @@
               <thead>
                     <tr class="danger">
                       <!--<th>Kliento paštas/darbuotojo kodas</th>-->
+                      <th>Biuras</th>
                       <th>Užsakymo data</th>
                       <th>Bendra kaina</th>
                       <th>Žaidimų pavadinimai</th>
@@ -26,12 +27,12 @@
                 if($_SESSION['user']['fk_role_id']==3 || $_SESSION['user']['fk_role_id']==2)
                 {
                     $kodas = $_SESSION['user']['kodas'];
-                    $sql = "SELECT u.id, u.bendra_kaina, u.data, u.klientas_id, u.darbuotojas_id, d.email, d.kodas FROM Uzsakymas u INNER JOIN Darbuotojas d ON u.darbuotojas_id = d.id AND d.kodas='$kodas'";  
+                    $sql = "SELECT u.biuras_id, u.id, u.bendra_kaina, u.data, u.klientas_id, u.darbuotojas_id, d.email, d.kodas FROM Uzsakymas u INNER JOIN Darbuotojas d ON u.darbuotojas_id = d.id AND d.kodas='$kodas' ORDER BY id DESC";  
                     $result = mysqli_query($conn, $sql);
                 }
                 else{
                     $email = $_SESSION['user']['email'];
-                    $sql = "SELECT u.id, u.bendra_kaina, u.data, u.klientas_id, u.darbuotojas_id, k.email, k.slapyvardis FROM Uzsakymas u INNER JOIN Klientas k ON u.klientas_id = k.id AND k.email='$email'";  
+                    $sql = "SELECT u.biuras_id, u.id, u.bendra_kaina, u.data, u.klientas_id, u.darbuotojas_id, k.email, k.slapyvardis FROM Uzsakymas u INNER JOIN Klientas k ON u.klientas_id = k.id AND k.email='$email' ORDER BY id DESC";  
                     $result = mysqli_query($conn, $sql);
                 }
                 while($row = mysqli_fetch_array($result)) {
@@ -77,6 +78,13 @@
                             echo $ro["email"];
                         }*/
                       </td>-->
+                        <td><?php 
+                            $sqlp = "SELECT pavadinimas FROM Biuras WHERE id =".$row['biuras_id'];
+                            $resultp = mysqli_query($conn, $sqlp);
+                            $a = mysqli_fetch_array($resultp);
+                            echo $a["pavadinimas"];
+                            ?>
+                        </td>
                         <td><?php echo $row["data"]?></td>
                         <td><?php echo $row["bendra_kaina"].'eu' ?></td>
                         <td>
