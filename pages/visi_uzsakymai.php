@@ -14,6 +14,7 @@
               <thead>
                     <tr class="danger">
                       <th>Kliento paštas/darbuotojo kodas</th>
+                      <th>Biuras</th>
                       <th>Užsakymo data</th>
                       <th>Bendra kaina</th>
                       <th>Žaidimų pavadinimai</th>
@@ -24,7 +25,7 @@
               <tbody>
               <?php
               //kol kas visi
-                $sql = "SELECT * FROM Uzsakymas WHERE 0=0"; 
+                $sql = "SELECT * FROM Uzsakymas WHERE 0=0 ORDER BY id DESC"; 
                 $result = mysqli_query($conn, $sql);
                 while($row = mysqli_fetch_array($result)) {
                     echo "<tr>";
@@ -68,6 +69,13 @@
                             echo $ro["email"];
                         }
                         ?></td>
+                        <td><?php 
+                            $sqlp = "SELECT pavadinimas FROM Biuras WHERE id =".$row['biuras_id'];
+                            $resultp = mysqli_query($conn, $sqlp);
+                            $a = mysqli_fetch_array($resultp);
+                            echo $a["pavadinimas"];
+                            ?>
+                        </td>
                         <td><?php echo $row["data"]?></td>
                         <td><?php echo $row["bendra_kaina"].'eu' ?></td>
                         <td>

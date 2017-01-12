@@ -20,6 +20,7 @@
 		$pavadinimas = $_POST['pavadinimas'];
 		$banko_saskaita = $_POST['banko_saskaita'];
 		$gatve  = $_POST['gatve'];
+                $numeris  = $_POST['numeris'];
 		$miestas = $_POST['miestas'];
 		$rajonas = $_POST['rajonas'];
 		$salis = $_POST['salis'];
@@ -29,7 +30,7 @@
         $adresas_id = $_POST['adresas_id'];
 		
 		$result = $db->updateBiuras($el_pastas, $tel_nr, $darbo_laikas, $faksas, $isteigimo_data, $pavadinimas, $banko_saskaita, $gatve, 
-		$miestas, $rajonas, $salis, $komentaras, $aukstas_pastate, $kabineto_nr, $adresas_id, $irasoId);
+		$miestas, $rajonas, $salis, $komentaras, $aukstas_pastate, $kabineto_nr, $adresas_id, $irasoId, $numeris);
         
         if($result)
             echo '
@@ -98,6 +99,12 @@
                     <label for="gatve" class="col-lg-4 control-label">Gatvė</label>
                     <div class="col-lg-8">
                         <input type="text" class="form-control" name="gatve" placeholder="" value="'.$data[0]['gatve'].'" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="numeris" class="col-lg-4 control-label">Numeris</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" name="numeris" placeholder="" value="'.$data[0]['numeris'].'" required>
                     </div>
                 </div>
                 <div class="form-group">

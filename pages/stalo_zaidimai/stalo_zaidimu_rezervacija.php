@@ -57,12 +57,14 @@ if(isset($_POST['uzs']))
     
     //is sesijos pasiimu bendra kaina
     $bendraK = $_SESSION["bendra_kaina"];
+    
+    $place = test_input($_POST["place"]);
         
     if($_SESSION['user']['fk_role_id']==2 || $_SESSION['user']['fk_role_id']==3)
     {
         $darbuotojas_id = $_SESSION['user']['id'];
         //kazkaip ideti darbuotojo_id
-        $sqlUzs = "INSERT INTO Uzsakymas(bendra_kaina, data, busenos_id, klientas_id, darbuotojas_id) VALUES(".$bendraK.",CAST('".$todayU."' AS DATE),".$busenos_id.",'',".$darbuotojas_id.")";
+        $sqlUzs = "INSERT INTO Uzsakymas(bendra_kaina, data, busenos_id, klientas_id, darbuotojas_id, biuras_id) VALUES(".$bendraK.",CAST('".$todayU."' AS DATE),".$busenos_id.",'',".$darbuotojas_id.",".$place.")";
         $resultUzs = mysqli_query($conn, $sqlUzs);
         $uzs_id = mysqli_insert_id($conn);
         //ideti i uzsakymo rezervacija tiek kartu kiek buvo rezervaciju
@@ -79,7 +81,7 @@ if(isset($_POST['uzs']))
     else if($_SESSION['user']['fk_role_id']==1){
         $klientas_id = $_SESSION['user']['id'];
         //kazkaip ideti kliento_id
-        $sqlUzs = "INSERT INTO Uzsakymas(bendra_kaina, data, busenos_id, klientas_id, darbuotojas_id) VALUES(".$bendraK.",CAST('".$todayU."' AS DATE),".$busenos_id.",".$klientas_id.",'')";
+        $sqlUzs = "INSERT INTO Uzsakymas(bendra_kaina, data, busenos_id, klientas_id, darbuotojas_id, biuras_id) VALUES(".$bendraK.",CAST('".$todayU."' AS DATE),".$busenos_id.",".$klientas_id.",'',".$place.")";
         $resultUzs = mysqli_query($conn, $sqlUzs);
         $uzs_id = mysqli_insert_id($conn);
         //ideti i uzsakymo rezervacija tiek kartu kiek buvo rezervaciju
@@ -257,22 +259,21 @@ if(isset($_POST['uzs']))
                             ?>
                             </tbody>
                         </table> 
+                      <?php
+                        $db = new mysql();
+                        $data = $db -> getBiurai();
+                      ?>
                         <label for="place" class="col-lg-7 control-label">Atsiėmimo vieta</label>
-                        <select class="form-control" id="place" name="place">
-                          <option selected>-</option>
-                         
-                          
-                          
-                          
-                          
-                          
-                          
-                          <option>3+</option>
-                          <option>7+</option>
-                          <option>10+</option>
-                          <option>12+</option>
-                          <option>18+</option>
+                        <select required class="form-control" id="place" name="place">
+                          <option selected value="">Neparinkta</option>
+                          <?php
+                          for($j = 0; $j < sizeof($data); $j++)
+                          {
+                            echo '<option value='.$data[$j]['id'].'>'.$data[$j]['pavadinimas'].' ('.$data[$j]['miestas'].', '.$data[$j]['gatve'].' '.$data[$j]['id'].')</option>';
+                          }
+                          ?>
                         </select>
+                        <br>
                         <?php  $_SESSION["bendra_kaina"] = $bendra_kaina;         //irasau bendra kaina i sesija ?>
                         <p style="text-align:justify;"> Bendra kaina: <?php echo $bendra_kaina ?> eur</p> 
                   </div>
@@ -320,4 +321,13 @@ if(isset($_POST['uzs']))
         </div>
           </fieldset>
         <!--</form>-->
+        
+        <?php
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+?>
 
