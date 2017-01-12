@@ -13,7 +13,7 @@
 
               <thead>
                     <tr class="danger">
-                      <th>Kliento paštas/darbuotojo kodas</th>
+                      <!--<th>Kliento paštas/darbuotojo kodas</th>-->
                       <th>Užsakymo data</th>
                       <th>Bendra kaina</th>
                       <th>Žaidimų pavadinimai</th>
@@ -68,14 +68,15 @@
                         $kiek++;
                     }
                     ?>
-                        <td><?php
+                       <!-- <td><?php
+                       /*
                         if($row["klientas_id"] == 0){
                             echo $ro["kodas"];
                         }
                         else {  
                             echo $ro["email"];
-                        }
-                        ?></td>
+                        }*/
+                        ?></td>-->
                         <td><?php echo $row["data"]?></td>
                         <td><?php echo $row["bendra_kaina"].'eu' ?></td>
                         <td>

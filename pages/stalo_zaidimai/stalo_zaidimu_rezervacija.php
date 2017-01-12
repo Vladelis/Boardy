@@ -100,9 +100,9 @@ if(isset($_POST['uzs']))
 <!--<form class="form-horizontal" method="post" enctype="multipart/form-data">-->
       <fieldset>
     <div class="col-md-6">
-        <legend><?php echo $row["pavadinimas"];?></legend>
+        <legend style="font-weight: bold;"><?php echo $row["pavadinimas"];?></legend>
         <div class="form-group">
-            <span style="font-weight: bold;">Žaidimo trukmė: <?php echo $row["zaidimo_trukme"];?></span>
+            <span>Žaidimo trukmė: <?php echo $row["zaidimo_trukme"];?></span>
         </div>
         <div class="form-group">
             <span>Žaidėjų skaičius: <?php echo $row["zaideju_skaicius"];?></span>

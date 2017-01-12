@@ -7,6 +7,8 @@
 			die();
 		}
 	}
+        else{header("Location: index.php?module=error");}
+            
 ?>
 
 <?php 
