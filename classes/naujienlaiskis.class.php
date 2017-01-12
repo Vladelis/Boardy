@@ -52,6 +52,16 @@
 			return $data;
 		}
 		
+		public function getNewslettersForDisplay() {
+			$query = "  SELECT *
+						FROM Naujienlaiskis 
+						WHERE ar_issiustas = 1
+						ORDER BY issiuntimo_data
+						";
+			$data = mysql::select($query);
+			return $data;
+		}
+		
 		public function getNewsletterById($id) {
 			$query = "  SELECT *
 						FROM Naujienlaiskis 

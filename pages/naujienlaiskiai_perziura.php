@@ -1,5 +1,6 @@
-
-	<?php
+		
+		
+		<?php
 		include 'classes/naujienlaiskis.class.php';
 		$newslettersObj = new newsletters();
 		
@@ -52,35 +53,23 @@
 		<link href="//cdn.quilljs.com/1.1.7/quill.snow.css" rel="stylesheet">
 		<link href="//cdn.quilljs.com/1.1.7/quill.bubble.css" rel="stylesheet">
 		<div class="col-md-12">
-			<legend style="padding-top:20px">Naujienlaiškio kūrimas</legend>
-			<form action="" method="post">
-				<input name="contents" id="Contents"  type="hidden"/>
-				<div class="form-group">
-					<label>Antraštė</label>
-					<input class="form-control" placeholder="Antraštė" name="subject" value="<?php echo $newsletter['antraste'] ?>" required />
+			<legend style="padding-top:20px"><?php echo $newsletter['antraste'] ?></legend>
+				<div class="col-sm-12" id="editor">
 				</div>
-				<div class="form-group">
-					<label>Apibūdinimas</label>
-					<input class="form-control" placeholder="Apibūdinimas" name="description" value="<?php echo $newsletter['apibudinimas'] ?>"/>
-				</div>
-				<div class="form-group">
-					<label>Komentaras</label>
-					<textarea class="form-control" rows="3" placeholder="Komentaras" name="comment" style="resize:none"><?php echo $newsletter['komentaras'] ?></textarea>
-				</div>
-				<div class="col-sm-12" id="editor" style="height:350px; margin-bottom:15px;">
-				</div>
-				<a href="index.php?module=naujienlaiskiai_sarasas" class="btn btn-default"> Grįžti </a>
-				<?php 
-					if (!empty($newsletter['id']))
-						echo "<input class='btn btn-primary' type='submit' name='submitUpdateNewsletter' value='Atnaujinti' onclick='addData()'/>";
-					else
-						echo "<input class='btn btn-primary' type='submit' name='submitCreateNewsletter' value='Sukurti' onclick='addData()'/>";
-				?>
-				
-			</form>
-			
+				<a href="index.php?module=naujienos" class="btn btn-default"> Grįžti </a>
 		</div>
-	
+		
+		<style>
+			#editor {
+				
+				margin-bottom:15px; 
+				border:none;
+			}
+			
+			.ql-editor {
+				cursor:default !important;
+			}
+		</style>
 		<script>
 			var toolbarOptions = [
 			  [{ 'size': ['small', false, 'large', 'huge'] }], 
@@ -100,7 +89,7 @@
 
 			var quill = new Quill('#editor', {
 			  modules: {
-				toolbar: toolbarOptions
+				toolbar: false
 			  },
 			  theme: 'snow'
 			});
@@ -108,9 +97,9 @@
 				var x= JSON.stringify(quill.getContents());
 				$("#Contents").val(x);
 			}
+			quill.enable(false);
 			var data = <?php echo json_encode(unserialize($newsletter["turinys"]))?>;
 			console.log(data);
 			quill.setContents(data);
-			
 			
 		</script>

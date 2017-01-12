@@ -109,3 +109,7 @@ transform:translatey(0);
 transition-delay:.2s;
 }
 
+.itallicGray {
+	color:lightgray;
+	font-style: italic;
+}
