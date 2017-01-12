@@ -68,7 +68,7 @@
                         $kiek++;
                     }
                     ?>
-                       <!-- <td><?php
+                       <!-- <td>
                        /*
                         if($row["klientas_id"] == 0){
                             echo $ro["kodas"];
@@ -76,7 +76,7 @@
                         else {  
                             echo $ro["email"];
                         }*/
-                        ?></td>-->
+                      </td>-->
                         <td><?php echo $row["data"]?></td>
                         <td><?php echo $row["bendra_kaina"].'eu' ?></td>
                         <td>

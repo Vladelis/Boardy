@@ -6,10 +6,6 @@
 			die();
 		}
 	}
-?>
-
-
-<?php
     //Duomenu atnaujinimas
     if(isset($_POST['submitUpdate']))
     {

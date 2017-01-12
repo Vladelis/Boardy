@@ -127,28 +127,26 @@
 														</li>
 													';
 												}
-                                                                                                //Biuro valdymu meniu vadybininkams
 												if($_SESSION['user']['fk_role_id']==3 || $_SESSION['user']['fk_role_id']==2)
 												{
+                                                                                                    echo'<li><a href="index.php?module=visi_uzsakymai">Visi užsakymai</a></li>';
+                                                                                                    //echo'<li><a href="index.php?module=mano_uzsakymai">Mano užsakymai</a></li>';
+                                                                                                    /*
                                                                                                     echo'
                                                                                                         <li class="dropdown">
                                                                                                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Užsakymai<span class="caret"></span></a>
                                                                                                                 <ul class="dropdown-menu" role="menu">
-                                                                                                                        <li><a href="/Boardy/index.php?module=uzsakymai/mano_uzsakymai">Mano užsakymai</a></li>
-                                                                                                                        <li><a href="/Boardy/index.php?module=uzsakymai/visi_uzsakymai">Visi užsakymai</a></li>
+                                                                                                                        <li><a href="index.php?module=mano_uzsakymai">Mano užsakymai</a></li>
+                                                                                                                        <li><a href="index.php?module=visi_uzsakymai">Visi užsakymai</a></li>
                                                                                                                 </ul>
                                                                                                         </li>
                                                                                                     ';
+                                                                                                     */
 												}
                                                                                                 else
                                                                                                 {
                                                                                                     echo'
-                                                                                                        <li class="dropdown">
-                                                                                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Užsakymai<span class="caret"></span></a>
-                                                                                                                <ul class="dropdown-menu" role="menu">
-                                                                                                                        <li><a href="/Boardy/index.php?module=uzsakymai/mano_uzsakymai">Mano užsakymai</a></li>
-                                                                                                                </ul>
-                                                                                                        </li>
+                                                                                                        <li><a href="index.php?module=mano_uzsakymai">Mano užsakymai</a></li>
                                                                                                     ';
                                                                                                 }
 											}
