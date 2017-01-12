@@ -6,7 +6,7 @@
 	
 	
 	// iškviečiame prisijungimo prie duomenų bazės klasę
-	$module = 'stalo_zaidimu_perziura';
+	$module = 'naujienos';
 	if(isset($_GET['module'])) {
 		$module = mysql::escape($_GET['module']);
 	}
@@ -75,7 +75,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				  </button>
-				  <a class="navbar-brand" href="index.php?module=stalo_zaidimu_perziura">Boardy</a>
+				  <a class="navbar-brand" href="index.php?module=naujienos">Boardy</a>
 				</div>
 
 				<div class="collapse navbar-collapse">
