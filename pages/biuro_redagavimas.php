@@ -156,8 +156,6 @@
     else 
     {
         $data = $db -> getBiurai();
-        for($i = 0; $i < sizeof($data); $i++)
-        {
         echo '
         <form class="form-horizontal" method="post" action="">
             <div class="form-group">
@@ -184,22 +182,21 @@
             <tbody>
             ';
             
-            for($i = 0; $i < sizeof($data); $i++)
+            for($j = 0; $j < sizeof($data); $j++)
             {
                 echo '
                 <tr>
-                    <td>'.$data[$i]['id'].'</td>
-                    <td>'.$data[$i]['pavadinimas'].'</td>
-                    <td>'.$data[$i]['gatve'].'</td>
-                    <td>'.$data[$i]['miestas'].'</td>
-                    <td>'.$data[$i]['banko_saskaita'].'</td>
-                    <td>'.$data[$i]['isteigimo_data'].'</td>
+                    <td>'.$data[$j]['id'].'</td>
+                    <td>'.$data[$j]['pavadinimas'].'</td>
+                    <td>'.$data[$j]['gatve'].'</td>
+                    <td>'.$data[$j]['miestas'].'</td>
+                    <td>'.$data[$j]['banko_saskaita'].'</td>
+                    <td>'.$data[$j]['isteigimo_data'].'</td>
                 </tr>
                 ';
             }
             echo'</tbody>
         </table>
         ';
-        }
     }
 ?>

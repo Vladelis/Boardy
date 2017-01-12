@@ -402,8 +402,9 @@ class mysql {
 	//Grazina visu biuru masyva
 	function getBiurai() 
 	{
-		//SELECT * FROM Biuras, Adresas WHERE Biuras.adresas_id = Adresas.id
-		$query = "SELECT * FROM `harhib`.`Biuras`,`harhib`.`Adresas` WHERE Biuras.adresas_id = Adresas.id";
+		$query = "SELECT `Biuras`.`id`,`Biuras`.`pavadinimas`,`Biuras`.`banko_saskaita`, `Biuras`.`isteigimo_data`, `Adresas`.`gatve`, `Adresas`.`miestas` 
+					FROM `harhib`.`Biuras`,`harhib`.`Adresas` 
+					WHERE Biuras.adresas_id = Adresas.id";
 		$result = self::select($query);
 		return $result;
 	}
