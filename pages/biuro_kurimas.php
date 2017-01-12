@@ -7,11 +7,6 @@
 			die();
 		}
 	}
-        else{header("Location: index.php?module=error");}
-            
-?>
-
-<?php 
 
 	if(isset($_POST['submitreg']))
     {	

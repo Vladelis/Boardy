@@ -15,7 +15,7 @@ if(isset($_POST['filtravimas']))
     if (($_POST["length"])!="-") {
         $adresas = $adresas.''."&trukme=".''.$_POST["length"];
     }
-    header('Location: '. $adresas);
+    ('Location: '. $adresas);
 }
 ?>
 <form class="form-horizontal" method="post" enctype="multipart/form-data"> 

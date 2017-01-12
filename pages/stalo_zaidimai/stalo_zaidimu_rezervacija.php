@@ -212,9 +212,6 @@ if(isset($_POST['uzs']))
             </div>
             ';
         }
-        ?>
-        
-        <?php 
         if(!empty($_SESSION['rez_ids']))
         {
         ?>
@@ -260,6 +257,22 @@ if(isset($_POST['uzs']))
                             ?>
                             </tbody>
                         </table> 
+                        <label for="place" class="col-lg-7 control-label">Atsiėmimo vieta</label>
+                        <select class="form-control" id="place" name="place">
+                          <option selected>-</option>
+                         
+                          
+                          
+                          
+                          
+                          
+                          
+                          <option>3+</option>
+                          <option>7+</option>
+                          <option>10+</option>
+                          <option>12+</option>
+                          <option>18+</option>
+                        </select>
                         <?php  $_SESSION["bendra_kaina"] = $bendra_kaina;         //irasau bendra kaina i sesija ?>
                         <p style="text-align:justify;"> Bendra kaina: <?php echo $bendra_kaina ?> eur</p> 
                   </div>
