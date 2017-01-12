@@ -16,22 +16,31 @@ if(isset($_POST['patvirtinti']))
     
     $datetime1 = strtotime($from);
     $datetime2 = strtotime($to);
-
-    $secs = $datetime2 - $datetime1;// == <seconds between the two times>
-    $days = $secs / 86400;
     
-    $sqlIns = "INSERT INTO Zaidimo_rezervacija (sukurimo_data, rezervavimo_data, rezervavimo_trukme, rezervavimo_kaina, zaidimo_id) VALUES(CAST('".$today."' AS DATE), CAST('".$from."' AS DATE), '".$days."', '".$days."', '".$_GET['id']."')";
-    $resultIns = mysqli_query($conn, $sqlIns);
-
-    //i sesija irasyti rezervacijos id     
-    $rez_id = mysqli_insert_id($conn);
-    if(!isset($_SESSION['rez_ids']))
+    if($datetime1> $datetime2)
     {
-        $_SESSION['rez_ids'] = array();
+        $message = "Neteisingai  įvestos datos!";
+        echo "<script type='text/javascript'>alert('$message');</script>";
     }
-    array_push($_SESSION['rez_ids'],$rez_id);
-    $message = "Jūsų stalo žaidimas užrezervuotas sistemoje!";
-    echo "<script type='text/javascript'>alert('$message');</script>";
+    else
+    {
+        $secs = $datetime2 - $datetime1;// == <seconds between the two times>
+        $days = $secs / 86400;
+
+
+        $sqlIns = "INSERT INTO Zaidimo_rezervacija (sukurimo_data, rezervavimo_data, rezervavimo_trukme, rezervavimo_kaina, zaidimo_id) VALUES(CAST('".$today."' AS DATE), CAST('".$from."' AS DATE), '".$days."', '".$days."', '".$_GET['id']."')";
+        $resultIns = mysqli_query($conn, $sqlIns);
+
+        //i sesija irasyti rezervacijos id     
+        $rez_id = mysqli_insert_id($conn);
+        if(!isset($_SESSION['rez_ids']))
+        {
+            $_SESSION['rez_ids'] = array();
+        }
+        array_push($_SESSION['rez_ids'],$rez_id);
+        $message = "Jūsų stalo žaidimas užrezervuotas sistemoje!";
+        echo "<script type='text/javascript'>alert('$message');</script>";
+    }
 }
 
 if(isset($_POST['uzs']))
@@ -55,15 +64,33 @@ if(isset($_POST['uzs']))
         //kazkaip ideti darbuotojo_id
         $sqlUzs = "INSERT INTO Uzsakymas(bendra_kaina, data, busenos_id, klientas_id, darbuotojas_id) VALUES(".$bendraK.",CAST('".$todayU."' AS DATE),".$busenos_id.",'',".$darbuotojas_id.")";
         $resultUzs = mysqli_query($conn, $sqlUzs);
+        $uzs_id = mysqli_insert_id($conn);
+        //ideti i uzsakymo rezervacija tiek kartu kiek buvo rezervaciju
+        $a = count($_SESSION['rez_ids']);
+        
+        for ($x = 0; $x < $a; $x++) {
+            $id = $_SESSION['rez_ids'][$x];
+            $sql = "INSERT INTO Uzsakymo_rezervacija(uzsakymas_id, zaidimo_rezervacija_id) VALUES(".$uzs_id.",".$id.")";
+            $u = mysqli_query($conn, $sql);
+        } 
+        
+        
     }
     else if($_SESSION['user']['fk_role_id']==1){
         $klientas_id = $_SESSION['user']['id'];
         //kazkaip ideti kliento_id
         $sqlUzs = "INSERT INTO Uzsakymas(bendra_kaina, data, busenos_id, klientas_id, darbuotojas_id) VALUES(".$bendraK.",CAST('".$todayU."' AS DATE),".$busenos_id.",".$klientas_id.",'')";
         $resultUzs = mysqli_query($conn, $sqlUzs);
+        $uzs_id = mysqli_insert_id($conn);
+        //ideti i uzsakymo rezervacija tiek kartu kiek buvo rezervaciju
+        $a = count($_SESSION['rez_ids']);
+        for ($x = 0; $x < $a; $x++) {
+            $id = $_SESSION['rez_ids'][$x];
+            $sql = "INSERT INTO Uzsakymo_rezervacija(uzsakymas_id, zaidimo_rezervacija_id) VALUES(".$uzs_id.",".$id.")";
+            $u = mysqli_query($conn, $sql);
+        } 
     } 
          
-    
     $message = "Jūsų užsakymas priimtas!";
     echo "<script type='text/javascript'>alert('$message');</script>";
 }
