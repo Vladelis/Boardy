@@ -9,13 +9,13 @@
 		
 		if(!empty($removeOfferId)) {
 			$offersObj->deleteOffer($removeOfferId);
+			$offersObj->removeOffer($activateOfferId);
 			header("Location: index.php?module={$module}");
 			die();
 		}
 		
 		if(!empty($activateOfferId)) {
 			$offersObj->activateOffer($activateOfferId);
-			$offersObj->removeOffer($activateOfferId);
 			header("Location: index.php?module={$module}");
 			die();
 		}

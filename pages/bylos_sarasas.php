@@ -9,7 +9,15 @@
 				die();
 		}
 		
-		
+		if(!empty($openCaseId)) {
+			$data = array (
+				'order' => $openCaseId,
+				'name' => 'test'
+			);
+			$casesObj -> openCase($data);
+			header("Location: index.php?module=bylos_sarasas");
+			die();
+		}
 	?>
 
 	

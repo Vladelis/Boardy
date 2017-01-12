@@ -44,7 +44,34 @@
 						WHERE	id = '{$data['id']}'";
 			mysql::query($query);
 		}
-	
+		
+		public function openCase($data) {
+			$date = date("Y-m-d");
+			
+			$query = "  INSERT INTO `Byla`
+									(
+										uzsakymas_id,
+										sukurimo_data,
+										komentaras,
+										busena,
+										ar_pavyko_susisiekti,
+										Pavadinimas
+									)
+									VALUES
+									(
+										'{$data['order']}',
+										'{$date}',
+										' ',
+										'1',
+										'0',
+										'Byla atidaryta {$date}'
+									)";
+			mysql::query($query);
+			$query1 = "  UPDATE  `Uzsakymas`
+						SET 	ar_yra_byla = '1'
+						WHERE	id = '{$data['order']}'";
+			mysql::query($query1);
+		}
 		
 		
 	}

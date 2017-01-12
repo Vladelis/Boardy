@@ -35,4 +35,11 @@
 			}
 		}
 		
+		function showOpenCaseConfirm(module, Id) {
+			var r = confirm("Ar tikrai norite atidaryti Bylą šiam užsakymui");
+			if (r === true) {
+				window.location.replace("index.php?module=" + module + "&openCase=" + Id);
+			}
+		}
+		
 		

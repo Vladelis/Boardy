@@ -20,6 +20,10 @@
 	if(!empty($_GET['removeNewsletter'])) {
 		$removeNewsletterId = mysql::escape($_GET['removeNewsletter']);
 	}
+	$openCaseId = 0;
+	if(!empty($_GET['openCase'])) {
+		$openCaseId = mysql::escape($_GET['openCase']);
+	}
 	
 	$sendNewsletterId = 0;
 	if(!empty($_GET['sendNewsletter'])) {

@@ -56,7 +56,7 @@
 			$query = "  SELECT *
 						FROM Naujienlaiskis 
 						WHERE ar_issiustas = 1
-						ORDER BY issiuntimo_data
+						ORDER BY issiuntimo_data DESC
 						";
 			$data = mysql::select($query);
 			return $data;

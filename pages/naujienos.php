@@ -1,11 +1,6 @@
 	<?php
 		include 'classes/naujienlaiskis.class.php';
 		$newslettersObj = new newsletters();
-		if (empty($_SESSION['user']) || $_SESSION['user']['fk_role_id']==1 )
-		{
-				header("Location: index.php?module=noaccess");
-				die();
-		}
 		
 		if(!empty($removeNewsletterId)) {
 			$newslettersObj->deleteNewsletter($removeNewsletterId);

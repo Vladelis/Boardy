@@ -40,12 +40,11 @@
 		
 		if(isset($_POST['submitUpdateOffer'])) {
 			$games = json_decode($_REQUEST['contents']);
-			$type=$_POST['tipas'];
 
 			
 			$data = array (
 				'name' => $_POST['name'],
-				'tipe' => $type,
+				'tipe' => 0,
 				'comment' => $_POST['comment'],
 				'count' => sizeof($games),
 				'discount' => $_POST['nuolaida'],
@@ -78,22 +77,8 @@
 					<label>Pavadinimas</label>
 					<input class="form-control" placeholder="Pavadinimas" name="name" value="<?php echo $offer['Pavadinimas'] ?>" required />
 				</div>
-				<div class="form-group">
-						<label >Tipas</label>
-						<select name="tipas" class="form-control" onchange="toggleDiscount(this)" required>
-							<option value="">---------------</option>
-							<?php
-								$data = $offersObj->getTypesList();
-								foreach($data as $key => $val) {
-									echo "<option value='{$val['id']}'"; 
-									if ($offer['tipas'] == $val['id'])
-										echo " selected ";
-									echo ">{$val['tipas']} </option>";
-								}
-							?>
-						</select>
-					</div>
-				<div class="form-group" id="discountItem" style="display:none">
+			
+				<div class="form-group" id="discountItem">
 					<label>Nuolaidos dydis (%)</label>
 					<input class="form-control" type="number" placeholder="Nuolaida" name="nuolaida" value="<?php echo $offer['nuolaidos_dydis'] ?>"/>
 				</div>
@@ -143,13 +128,6 @@
 					echo "boardgames.push('{$val['id']}');";
 				}
 			?>
-			console.log(boardgames);
-			function toggleDiscount(item) {
-				if (item.value == 1) 
-					$("#discountItem").show();
-				else
-					$("#discountItem").hide();
-			}
 			
 			$('#gameAddButton').on( 'click', function() {
 				if ($("#zaidimai").val() != -1) {

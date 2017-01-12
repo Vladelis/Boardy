@@ -21,17 +21,18 @@
 		}
 	?>
 
-		<div class="col-md-12">
+		<div class="col-md-12" >
 			<legend style="padding-top:20px">Naujienlaiškiai</legend>
 			<div class="col-md-12" style="padding-bottom:15px">
 			
 			
 				<a class="btn btn-primary" href="index.php?module=naujienlaiskis_redagavimas">Naujas naujienlaiškis </a>
 			</div>
-			<?php
+			<div style="display: table;">
+				<?php
 							$data = $newslettersObj -> getNewsletters();
 								foreach($data as $key => $val) {
-									echo "<div class='col-sm-4 newsletterItem'> <div class='newsletter-options'>";
+									echo "<div class='col-sm-4 newsletterItem' style='display: table-cell;'> <div class='newsletter-options'>";
 									if ($val['ar_issiustas']==0) {
 										echo"<a class='btn btn-xs btn-success' href='#' onclick='showNewsletterSendConfirm(\"{$module}\", \"{$val['id']}\"); return false;'>Siusti</a>";
 										echo"<a class='btn btn-xs btn-info' href='index.php?module=naujienlaiskis_redagavimas&id={$val['id']}'>Redaguoti</a>";
@@ -46,10 +47,13 @@
 									else 
 										echo " sentMail'>";
 									echo "<span class=' glyphicon glyphicon-envelope' style='padding-top:20px'></span></div>";
-									echo "<div><h4>{$val['antraste']}</h4><p><i>{$val['laisko_trumpinys']}</i></p></div>";
+									echo "<div><h4>{$val['antraste']}</h4><p><i>{$val['apibudinimas']}</i></p></div>";
 									echo "</div>";
 								}							
 			?>
+			</div>
+			
+			
 		</div>
 
 	
