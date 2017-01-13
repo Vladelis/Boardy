@@ -1,10 +1,10 @@
 <?php
 
 class config {
-	const DB_SERVER    = 'db.if.ktu.lt';
-	const DB_NAME      = 'harhib';
-	const DB_USERNAME  = 'harhib';
-	const DB_PASSWORD  = 'ohng2aeyee0Eeghe';
+	const DB_SERVER    = 'localhost';
+	const DB_NAME      = 'boardy';
+	const DB_USERNAME  = 'root';
+	const DB_PASSWORD  = '';
 }
 
 ?>
