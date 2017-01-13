@@ -35,7 +35,7 @@ class mysql {
 	
 	function insertRedagavimoIstorija($ip, $redaguotoId, $redaguotojoId, $tipas) {
 		$q = 
-		"INSERT INTO  `harhib`.`Redagavimo_istorija` (
+		"INSERT INTO  `boardy`.`Redagavimo_istorija` (
 			`id` ,
 			`data_laikas` ,
 			`redaguotas_profilis` ,
@@ -52,7 +52,7 @@ class mysql {
 	
 	function deleteKlientas($email) {
 		$q = "
-		DELETE FROM `harhib`.`Klientas` WHERE  `Klientas`.`email` = '".$email."';
+		DELETE FROM `boardy`.`Klientas` WHERE  `Klientas`.`email` = '".$email."';
 		";
 		$result = self::query($q);
 		return $result;
@@ -60,7 +60,7 @@ class mysql {
 	
 	function deleteDarbuotojas($kodas) {
 		$q = "
-		DELETE FROM `harhib`.`Darbuotojas` WHERE  `Darbuotojas`.`kodas` = '".$kodas."';
+		DELETE FROM `boardy`.`Darbuotojas` WHERE  `Darbuotojas`.`kodas` = '".$kodas."';
 		";
 		$result = self::query($q);
 		return $result;
@@ -68,7 +68,7 @@ class mysql {
 	
 	function updateUserLogin($ip, $email) {
 		$q = 
-		"UPDATE  `harhib`.`Klientas` 
+		"UPDATE  `boardy`.`Klientas` 
 		SET  
 			`paskutinis_prisijungimas` =  CURTIME(),
 			`paskutinis_ip` =  '".$ip."',
@@ -81,7 +81,7 @@ class mysql {
 	
 	function updateDarbuotojasLogin($ip, $email) {
 		$q = 
-		"UPDATE  `harhib`.`Darbuotojas` 
+		"UPDATE  `boardy`.`Darbuotojas` 
 		SET  
 			`paskutinis_prisijungimas` =  CURTIME(),
 			`paskutinis_ip` =  '".$ip."'
@@ -94,7 +94,7 @@ class mysql {
 	function getFullKlientasData($email) {
 		$q = 
 		"SELECT `Klientas`.`email`, `Klientas`.`slapyvardis`, `Klientas`.`vardas`, `Klientas`.`pavarde`, `Klientas`.`ar_nori_naujienlaiskio`
-		FROM  `harhib`.`Klientas`
+		FROM  `boardy`.`Klientas`
 		WHERE  `email` = '".$email."'"
 		;
 		$result = self::select($q);
@@ -104,7 +104,7 @@ class mysql {
 	function getFullDarbuotojasData($kodas) {
 		$q = 
 		"SELECT `Darbuotojas`.`email`, `Darbuotojas`.`vardas`, `Darbuotojas`.`pavarde`, `Darbuotojas`.`kodas`
-		FROM  `harhib`.`Darbuotojas`
+		FROM  `boardy`.`Darbuotojas`
 		WHERE  `kodas` = '".$kodas."'"
 		;
 		$result = self::select($q);
@@ -113,7 +113,7 @@ class mysql {
 	
 	function redaguotiKlientoVarda($email, $vardas) {
 		$q = "
-		UPDATE `harhib`.`Klientas` SET  `vardas` =  '".$vardas."' WHERE  `Klientas`.`email` = '".$email."';
+		UPDATE `boardy`.`Klientas` SET  `vardas` =  '".$vardas."' WHERE  `Klientas`.`email` = '".$email."';
 		";
 		$result = self::query($q);
 		return $result;
@@ -121,7 +121,7 @@ class mysql {
 	
 	function redaguotiKlientoPavarde($email, $pavarde) {
 		$q = "
-		UPDATE `harhib`.`Klientas` SET  `pavarde` =  '".$pavarde."' WHERE  `Klientas`.`email` = '".$email."';
+		UPDATE `boardy`.`Klientas` SET  `pavarde` =  '".$pavarde."' WHERE  `Klientas`.`email` = '".$email."';
 		";
 		$result = self::query($q);
 		return $result;
@@ -129,7 +129,7 @@ class mysql {
 	
 	function redaguotiKlientoSlapyvardi($email, $slapyvardis) {
 		$q = "
-		UPDATE `harhib`.`Klientas` SET  `slapyvardis` =  '".$slapyvardis."' WHERE  `Klientas`.`email` = '".$email."';
+		UPDATE `boardy`.`Klientas` SET  `slapyvardis` =  '".$slapyvardis."' WHERE  `Klientas`.`email` = '".$email."';
 		";
 		$result = self::query($q);
 		return $result;
@@ -137,7 +137,7 @@ class mysql {
 	
 	function redaguotiKlientoNaujienlaiskius($email, $ar_nori_naujienlaiskio) {
 		$q = "
-		UPDATE `harhib`.`Klientas` SET  `ar_nori_naujienlaiskio` =  '".$ar_nori_naujienlaiskio."' WHERE  `Klientas`.`email` = '".$email."';
+		UPDATE `boardy`.`Klientas` SET  `ar_nori_naujienlaiskio` =  '".$ar_nori_naujienlaiskio."' WHERE  `Klientas`.`email` = '".$email."';
 		";
 		$result = self::query($q);
 		return $result;
@@ -145,7 +145,7 @@ class mysql {
 	
 	function redaguotiKlientoSlaptazodi($email, $slaptazodis) {
 		$q = "
-		UPDATE `harhib`.`Klientas` SET  `slaptazodis` =  '".$slaptazodis."' WHERE  `Klientas`.`email` = '".$email."';
+		UPDATE `boardy`.`Klientas` SET  `slaptazodis` =  '".$slaptazodis."' WHERE  `Klientas`.`email` = '".$email."';
 		";
 		$result = self::query($q);
 		return $result;
@@ -153,7 +153,7 @@ class mysql {
 	
 	function redaguotiDarbuotojoSlaptazodi($kodas, $slaptazodis) {
 		$q = "
-		UPDATE `harhib`.`Darbuotojas` SET  `slaptazodis` =  '".$slaptazodis."' WHERE  `Darbuotojas`.`kodas` = '".$kodas."';
+		UPDATE `boardy`.`Darbuotojas` SET  `slaptazodis` =  '".$slaptazodis."' WHERE  `Darbuotojas`.`kodas` = '".$kodas."';
 		";
 		$result = self::query($q);
 		return $result;
@@ -161,7 +161,7 @@ class mysql {
 	
 	function redaguotiDarbuotojoEmail($kodas, $email) {
 		$q = "
-		UPDATE `harhib`.`Darbuotojas` SET  `email` =  '".$email."' WHERE  `Darbuotojas`.`kodas` = '".$kodas."';
+		UPDATE `boardy`.`Darbuotojas` SET  `email` =  '".$email."' WHERE  `Darbuotojas`.`kodas` = '".$kodas."';
 		";
 		$result = self::query($q);
 		return $result;
@@ -170,7 +170,7 @@ class mysql {
 	function checkUserLogin($email, $slaptazodis) {
 		$q = 
 		"SELECT `Klientas`.`id`, `Klientas`.`email`, `Klientas`.`ar_patvirtintas`, `Klientas`.`fk_role_id`
-		FROM  `harhib`.`Klientas`
+		FROM  `boardy`.`Klientas`
 		WHERE  `email` = '".$email."' AND `slaptazodis` = '".$slaptazodis."'"
 		;
 		$result = self::select($q);
@@ -188,7 +188,7 @@ class mysql {
 	function checkDarbuotojasLogin($email, $slaptazodis) {
 		$q = 
 		"SELECT `Darbuotojas`.`id`, `Darbuotojas`.`email`, `Darbuotojas`.`kodas`, `Darbuotojas`.`fk_role_id`
-		FROM  `harhib`.`Darbuotojas`
+		FROM  `boardy`.`Darbuotojas`
 		WHERE  `email` = '".$email."' AND `slaptazodis` = '".$slaptazodis."'"
 		;
 		$result = self::select($q);
@@ -206,7 +206,7 @@ class mysql {
 	function checkForSameEmail($email) {
 		$q = 
 		"SELECT `Klientas`.`email`
-		FROM  `harhib`.`Klientas`
+		FROM  `boardy`.`Klientas`
 		WHERE  `email` = '".$email."'";
 		$result = self::select($q);
 		return $result;
@@ -215,7 +215,7 @@ class mysql {
 	function getKlientasId($email) {
 		$q = 
 		"SELECT `Klientas`.`id`
-		FROM  `harhib`.`Klientas`
+		FROM  `boardy`.`Klientas`
 		WHERE  `email` = '".$email."'";
 		$result = self::select($q);
 		return $result;
@@ -224,7 +224,7 @@ class mysql {
 	function getDarbuotojasId($kodas) {
 		$q = 
 		"SELECT `Darbuotojas`.`id`
-		FROM  `harhib`.`Darbuotojas`
+		FROM  `boardy`.`Darbuotojas`
 		WHERE  `kodas` = '".$kodas."'";
 		$result = self::select($q);
 		return $result;
@@ -233,7 +233,7 @@ class mysql {
 	function checkForSameEmailDarbuotojas($email) {
 		$q = 
 		"SELECT `Darbuotojas`.`email`
-		FROM  `harhib`.`Darbuotojas`
+		FROM  `boardy`.`Darbuotojas`
 		WHERE  `email` = '".$email."'";
 		$result = self::select($q);
 		return $result;
@@ -242,7 +242,7 @@ class mysql {
 	function checkForSameSlapyvardis($slapyvardis) {
 		$q = 
 		"SELECT `Klientas`.`email`
-		FROM  `harhib`.`Klientas`
+		FROM  `boardy`.`Klientas`
 		WHERE  `slapyvardis` = '".$slapyvardis."'";
 		$result = self::select($q);
 		return $result;
@@ -252,7 +252,7 @@ class mysql {
 	function checkForSameKodas($kodas) {
 		$q = 
 		"SELECT `Darbuotojas`.`email`
-		FROM  `harhib`.`Darbuotojas`
+		FROM  `boardy`.`Darbuotojas`
 		WHERE  `kodas` = '".$kodas."'";
 		$result = self::select($q);
 		if(isset($result)) {
@@ -264,7 +264,7 @@ class mysql {
 	
 	function insertNewKlientas($email, $slaptazodis, $vardas, $pavarde, $slapyvardis, $ar_nori_naujienlaiskio, $ip, $patvirtinimas) {
 		$q = 
-		"INSERT INTO  `harhib`.`Klientas` (
+		"INSERT INTO  `boardy`.`Klientas` (
 			`id` ,
 			`sukurimo_data` ,
 			`email` ,
@@ -306,7 +306,7 @@ class mysql {
 	// tipas : 2 - darbuotojas, 3 - vadybininkas
 	function insertNewDarbuotojas($email, $slaptazodis, $vardas, $pavarde, $kodas, $ip, $tipas) {
 		$q = 
-		"INSERT INTO  `harhib`.`Darbuotojas` (
+		"INSERT INTO  `boardy`.`Darbuotojas` (
 			`id`,
 			`sukurimo_data` ,
 			`email` ,
@@ -342,7 +342,7 @@ class mysql {
 	function insertNewBiuras($el_pastas, $tel_nr, $darbo_laikas, $faksas, $isteigimo_data, $pavadinimas, $banko_saskaita, $gatve, 
 		$miestas, $rajonas, $salis, $komentaras, $aukstas_pastate, $kabineto_nr)
 	{
-		$query = "INSERT INTO `harhib`.`Adresas` (
+		$query = "INSERT INTO `boardy`.`Adresas` (
 			`gatve` ,
 			`miestas` ,
 			`rajonas` ,
@@ -370,7 +370,7 @@ class mysql {
 		//katik sukurto adreso id
 		$lastID = self::getLastInsertedId();
 		
-		$query = "INSERT INTO `harhib`.`Biuras` (
+		$query = "INSERT INTO `boardy`.`Biuras` (
 			`el_pastas` ,
 			`tel_nr` ,
 			`darbo_laikas` ,
@@ -403,7 +403,7 @@ class mysql {
 	function getBiurai() 
 	{
 		$query = "SELECT `Biuras`.`id`,`Biuras`.`pavadinimas`,`Biuras`.`banko_saskaita`, `Biuras`.`isteigimo_data`, `Adresas`.`gatve`, `Adresas`.`miestas` 
-					FROM `harhib`.`Biuras`,`harhib`.`Adresas` 
+					FROM `boardy`.`Biuras`,`boardy`.`Adresas` 
 					WHERE Biuras.adresas_id = Adresas.id";
 		$result = self::select($query);
 		return $result;
@@ -413,7 +413,7 @@ class mysql {
 	function getBiuras($biuro_id) 
 	{
 		//SELECT * FROM Biuras, Adresas WHERE Biuras.adresas_id = Adresas.id
-		$query = "SELECT * FROM `harhib`.`Biuras`,`harhib`.`Adresas` WHERE Biuras.adresas_id = Adresas.id AND Biuras.id = ".$biuro_id.";";
+		$query = "SELECT * FROM `boardy`.`Biuras`,`boardy`.`Adresas` WHERE Biuras.adresas_id = Adresas.id AND Biuras.id = ".$biuro_id.";";
 		$result = self::select($query);
 		return $result;
 	}
@@ -424,7 +424,7 @@ class mysql {
 		
 		//atnaujina adresa
 		$query = 
-		"UPDATE `harhib`.`Adresas` SET 
+		"UPDATE `boardy`.`Adresas` SET 
 			`gatve`='".$gatve."',
 			`miestas`='".$miestas."',
 			`rajonas`='".$rajonas."',
@@ -441,7 +441,7 @@ class mysql {
 		}
 		
 		//atnaujina biura
-		$query = "UPDATE `harhib`.`Biuras` SET
+		$query = "UPDATE `boardy`.`Biuras` SET
 			`el_pastas`='".$el_pastas."',
 			`tel_nr`='".$tel_nr."',
 			`darbo_laikas`='".$darbo_laikas."',
@@ -462,14 +462,14 @@ class mysql {
 	
 	function trintiBiura($biuras_id, $adresas_id)
 	{
-		$query = "DELETE FROM `harhib`.`Adresas` WHERE id=".$adresas_id."";
+		$query = "DELETE FROM `boardy`.`Adresas` WHERE id=".$adresas_id."";
 		$result = self::query($query);
 		if (!$result) {
 			echo 'false';
 			return NULL;
 		}
 		
-		$query = "DELETE FROM `harhib`.`Biuras` WHERE id=".$biuras_id."";
+		$query = "DELETE FROM `boardy`.`Biuras` WHERE id=".$biuras_id."";
 		$result = self::query($query);
 		if (!$result) {
 			echo 'false';
