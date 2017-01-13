@@ -28,7 +28,7 @@
 			
 				<a class="btn btn-primary" href="index.php?module=naujienlaiskis_redagavimas">Naujas naujienlaiškis </a>
 			</div>
-			<div style="display: table;">
+			<div>
 				<?php
 							$data = $newslettersObj -> getNewsletters();
 								foreach($data as $key => $val) {
